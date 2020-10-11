@@ -1,0 +1,29 @@
+R 1200            700
+
+NO ./textures/hogwarts/ron.xpm
+SO ./textures/hogwarts/harry.xpm
+WE ./textures/hogwarts/draco.xpm
+EA ./textures/hogwarts/herma.xpm
+S ./textures/hogwarts/dobby.xpm
+
+F ./textures/comun/floor.xpm
+C ./textures/comun/pleine-lune.xpm
+
+
+I ./textures/comun/hand1.xpm
+O ./textures/hogwarts/isfree2.xpm
+P ./textures/hogwarts/isfree3.xpm
+
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 0 3 0 3 1 0 1 0 1 0 0 0 0 0 0 3 1 3 0 3 0 0 0 3 0 1 0 1
+1 0 0 1 0 0 0 0 0 0 0 0 1 1 0 3 0 0 0 0 0 0 0 1 0 0 0 1 0 1
+1 1 1 1 1 1 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 1
+1 3 0 0 1 1 1 0 0 0 0 0 1 0 0 0 0 1 1 1 1 3 0 0 0 1 1 1 1 1
+1 1 1 0 0 0 1 1 1 1 1 0 1 1 0 1 0 0 0 3 0 0 1 1 1 1 0 2 0 1
+1 3 0 0 1 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 1
+1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 1
+1 1 1 3 0 3 1 0 0 0 0 3 0 0 0 0 0 0 0 1 0 0 0 1 1 1 1 1 1 1
+1 0 1 1 0 0 1 0 0 1 1 0 1 1 1 1 0 1 0 0 0 1 3 1 0 3 3 3 0 1
+1 0 1 1 1 0 0 0 0 0 0 1 1 0 3 1 0 1 1 1 1 1 1 1 0 0 0 0 0 1
+1 3 0 0 0 0 1 1 1 1 0 0 0 0 1 1 0 0 0 0 0 0 0 0 0 0 N 0 0 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
