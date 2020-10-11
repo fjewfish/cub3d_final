@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memcmp.c                                        :+:      :+:    :+:   */
+/*   ft_memcmp 2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fjewfish <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: fjewfish <fjewfish@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/29 11:18:12 by fjewfish          #+#    #+#             */
-/*   Updated: 2020/05/29 11:19:14 by fjewfish         ###   ########.fr       */
+/*   Updated: 2020/10/11 20:12:17 by fjewfish         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 ** Both strings are assumed to be n bytes long.
 */
 
-int	ft_memcmp(const void *s1, const void *s2, size_t n)
+int	ft_memcmp(const void *aio1, const void *aio2, size_t n)
 {
 	unsigned char *d1;
 	unsigned char *d2;

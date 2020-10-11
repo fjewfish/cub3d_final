@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   ft_strncmp 2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fjewfish <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: fjewfish <fjewfish@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/29 11:37:39 by fjewfish          #+#    #+#             */
-/*   Updated: 2020/05/29 11:52:02 by fjewfish         ###   ########.fr       */
+/*   Updated: 2020/10/11 20:12:17 by fjewfish         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 ** characters that appear after a `\0' character are not compared.
 */
 
-int		ft_strncmp(const char *s1, const char *s2, size_t n)
+int		ft_strncmp(const char *aio1, const char *aio2, size_t n)
 {
 	size_t	i;
 

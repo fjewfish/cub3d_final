@@ -3,32 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   ft_if_flags.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fjewfish <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: fjewfish <fjewfish@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/18 18:06:32 by fjewfish          #+#    #+#             */
-/*   Updated: 2020/07/27 12:31:42 by fjewfish         ###   ########.fr       */
+/*   Updated: 2020/10/11 20:12:17 by fjewfish         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/all.h"
 
-void		if_dot(const char *line, int *start,
+void		if_dot(const char *line, int *aiotart,
 			t_fps *format_str, va_list argptr)
 {
-	(*start)++;
-	if (line[*start] == '*')
+	(*aiotart)++;
+	if (line[*aiotart] == '*')
 	{
 		format_str->dot = va_arg(argptr, int);
-		(*start)++;
+		(*aiotart)++;
 		format_str->length_format++;
 	}
 	else
 	{
 		format_str->dot = 0;
-		while (ft_isdigit(line[*start]))
+		while (ft_isdigit(line[*aiotart]))
 		{
-			format_str->dot = (format_str->dot * 10) + (line[*start] - '0');
-			(*start)++;
+			format_str->dot = (format_str->dot * 10) + (line[*aiotart] - '0');
+			(*aiotart)++;
 			format_str->length_format++;
 		}
 	}

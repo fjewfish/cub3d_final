@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memmove.c                                       :+:      :+:    :+:   */
+/*   ft_memmove 2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fjewfish <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: fjewfish <fjewfish@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/29 11:20:40 by fjewfish          #+#    #+#             */
-/*   Updated: 2020/05/29 11:22:03 by fjewfish         ###   ########.fr       */
+/*   Updated: 2020/10/11 20:12:17 by fjewfish         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 ** manner.
 */
 
-void	*ft_memmove(void *s1, const void *s2, size_t n)
+void	*ft_memmove(void *aio1, const void *aio2, size_t n)
 {
 	size_t			i;
 	unsigned char	*d1;

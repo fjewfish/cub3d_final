@@ -32,7 +32,9 @@ int		ft_draw(t_all *s)
 {
 	//if (ft_endflag(s))
 	//	ft_close(s, 1);
+	mlx_do_sync(s->mlx.ptr);
 	ft_screen(s);
+	ft_map_mini(s);
 	mlx_put_image_to_window(s->mlx.ptr, s->win.ptr, s->img.ptr, 0, 0);
 	s->img.ptr = NULL;
 	s->img.adr = NULL;
@@ -62,7 +64,8 @@ void	ft_screen(t_all *s)
 		ft_ver(s);
 		ft_hor(s);
 		ft_stock(s);
-		ft_column(s, ft_size(s));
+		if (s->map_mode != 1)
+			ft_column(s, ft_size(s));
 		if (s->ray.i == 0)
 		{
 			s->mapmod.first_hit_x = s->hit.x;
@@ -72,6 +75,7 @@ void	ft_screen(t_all *s)
 	}
 	s->mapmod.last_hit_x = s->hit.x;
 	s->mapmod.last_hit_y = s->hit.y;
+	mlx_do_sync(s->mlx.ptr);
 	//ft_sprite(s);
 	//ft_hud(s);
 }

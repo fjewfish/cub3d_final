@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fjewfish <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: fjewfish <fjewfish@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/29 11:39:47 by fjewfish          #+#    #+#             */
-/*   Updated: 2020/05/29 11:40:39 by fjewfish         ###   ########.fr       */
+/*   Updated: 2020/10/11 20:12:17 by fjewfish         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,24 +18,24 @@
 ** `\0'.
 */
 
-char	*ft_strrchr(const char *s, int c)
+char	*ft_strrchr(const char *aio, int c)
 {
 	size_t i;
 
 	i = 0;
-	while (*s)
+	while (*aio)
 	{
 		i++;
 		s++;
 	}
 	while (i > 0)
 	{
-		if (*s == (char)c)
+		if (*aio == (char)c)
 			return ((char *)s);
 		s--;
 		i--;
 	}
-	if (*s == (char)c)
+	if (*aio == (char)c)
 		return ((char *)s);
 	return (NULL);
 }

@@ -1,9 +1,9 @@
 /*
-** mlx.h for MinilibX in 
-** 
+** mlx.h for MinilibX in
+**
 ** Made by Charlie Root
 ** Login   <ol@42.fr>
-** 
+**
 ** Started on  Mon Jul 31 16:37:50 2000 Charlie Root
 ** Last update Tue Oct 14 16:23:28 2019 Olivier Crouzet
 */
@@ -74,7 +74,7 @@ void	*mlx_new_image(void *mlx_ptr,int width,int height);
 **  return void *0 if failed
 */
 char	*mlx_get_data_addr(void *img_ptr, int *bits_per_pixel,
-			   int *size_line, int *endian);
+			   int *aioize_line, int *endian);
 /*
 **  endian : 0 = graphical sever is little endian, 1 = big endian
 **  usefull in a network environment where graphical app show on a remote monitor that can have a different endian
@@ -113,7 +113,7 @@ int	mlx_loop (void *mlx_ptr);
 */
 
 int	mlx_string_put(void *mlx_ptr, void *win_ptr, int x, int y, int color,
-		       char *string);
+		       char *aiotring);
 void	*mlx_xpm_to_image(void *mlx_ptr, char **xpm_data,
 			  int *width, int *height);
 void	*mlx_xpm_file_to_image(void *mlx_ptr, char *filename,
@@ -152,6 +152,6 @@ int	mlx_sync(int cmd, void *param);
 ** cmd is one of the define, param will be img_ptr or win_ptr accordingly
 */
 
-int	mlx_get_screen_size(void *mlx_ptr, int *sizex, int *sizey);
+int	mlx_get_screen_size(void *mlx_ptr, int *aioizex, int *aioizey);
 
 #endif /* MLX_H */

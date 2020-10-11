@@ -31,7 +31,7 @@
 # define RIGHT 124
 
 # define SPEED 7
-# define TURN 0.025
+# define TURN 0.05
 
 # define ANG 0.57595865315
 
@@ -271,4 +271,5 @@ unsigned int	ft_shadow(t_all *aio, unsigned int col);
 
 //MAP
 void	ft_map_mode(t_all *aio);
+void	ft_map_mini(t_all *aio);
 #endif

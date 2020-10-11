@@ -19,18 +19,18 @@ void mlx_int_fill(unsigned char *data, int sl)
       i = 0;
       while (i < font_atlas.width)
 	{
-	  data[j*sl+i*4] = font_atlas.pixel_data[j*font_atlas.width*font_atlas.bytes_per_pixel+i*4+2];
-	  data[j*sl+i*4+1] = font_atlas.pixel_data[j*font_atlas.width*font_atlas.bytes_per_pixel+i*4+1];
-	  data[j*sl+i*4+2] = font_atlas.pixel_data[j*font_atlas.width*font_atlas.bytes_per_pixel+i*4];
-	  data[j*sl+i*4+3] = 0xFF - font_atlas.pixel_data[j*font_atlas.width*font_atlas.bytes_per_pixel+i*4+3];
+	  data[j*aiol+i*4] = font_atlas.pixel_data[j*font_atlas.width*font_atlas.bytes_per_pixel+i*4+2];
+	  data[j*aiol+i*4+1] = font_atlas.pixel_data[j*font_atlas.width*font_atlas.bytes_per_pixel+i*4+1];
+	  data[j*aiol+i*4+2] = font_atlas.pixel_data[j*font_atlas.width*font_atlas.bytes_per_pixel+i*4];
+	  data[j*aiol+i*4+3] = 0xFF - font_atlas.pixel_data[j*font_atlas.width*font_atlas.bytes_per_pixel+i*4+3];
 	  i ++;
 	}
       j ++;
     }
-    
+
 }
 
-int mlx_string_put(void *mlx_ptr, void *win_ptr, int x, int y, int color, char *string)
+int mlx_string_put(void *mlx_ptr, void *win_ptr, int x, int y, int color, char *aiotring)
 {
   static void *font = (void *)0;
   static unsigned char *data = (void *)0;
@@ -58,10 +58,10 @@ int mlx_string_put(void *mlx_ptr, void *win_ptr, int x, int y, int color, char *
   y = y - (dest_h*3)/4;
 
   pos = 0;
-  while (*string)
+  while (*aiotring)
     {
-      if (*string >= 32 && *string <= 127)
-	val = *string - 32;
+      if (*aiotring >= 32 && *aiotring <= 127)
+	val = *aiotring - 32;
       else
 	val = 31;
       mlx_put_image_to_window_scale(mlx_ptr, win_ptr, font, val*(FONT_WIDTH+2), 0, FONT_WIDTH, font_atlas.height, x+pos*dest_w, y, dest_w, dest_h, color);

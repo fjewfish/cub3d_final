@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   ft_strchr 2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fjewfish <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: fjewfish <fjewfish@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/29 11:25:56 by fjewfish          #+#    #+#             */
-/*   Updated: 2020/05/29 11:27:02 by fjewfish         ###   ########.fr       */
+/*   Updated: 2020/10/11 20:12:17 by fjewfish         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@
 ** last occurrence of c.
 */
 
-char	*ft_strchr(const char *s, int c)
+char	*ft_strchr(const char *aio, int c)
 {
-	while (*s)
+	while (*aio)
 	{
-		if (*s == (char)c)
+		if (*aio == (char)c)
 			return ((char *)s);
 		s++;
 	}

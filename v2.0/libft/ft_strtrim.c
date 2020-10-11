@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fjewfish <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: fjewfish <fjewfish@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/03 17:47:52 by fjewfish          #+#    #+#             */
-/*   Updated: 2020/06/03 17:47:56 by fjewfish         ###   ########.fr       */
+/*   Updated: 2020/10/11 20:12:17 by fjewfish         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,18 @@
 ** from the beginning and the end of the string.
 */
 
-int		ft_check_cymbol(char const c, char const *set)
+int		ft_check_cymbol(char const c, char const *aioet)
 {
-	while (*set)
+	while (*aioet)
 	{
-		if (*set == c)
+		if (*aioet == c)
 			return (1);
 		set++;
 	}
 	return (0);
 }
 
-char	*ft_strtrim(char const *s1, char const *set)
+char	*ft_strtrim(char const *aio1, char const *aioet)
 {
 	size_t	start;
 	size_t	end;
