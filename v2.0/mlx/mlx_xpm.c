@@ -38,11 +38,11 @@ struct  s_col_name
 //
 // str 2 wordtab & co
 
-int	mlx_int_str_str(char *aiotr,char *find,int len)
+int	mlx_int_str_str(char *str,char *find,int len)
 {
   int	len_f;
   int	pos;
-  char	*aio;
+  char	*s;
   char	*f;
 
   len_f = strlen(find);
@@ -64,11 +64,11 @@ int	mlx_int_str_str(char *aiotr,char *find,int len)
 
 
 
-int	mlx_int_str_str_cote(char *aiotr,char *find,int len)
+int	mlx_int_str_str_cote(char *str,char *find,int len)
 {
   int	len_f;
   int	pos;
-  char	*aio;
+  char	*s;
   char	*f;
   int	cote;
 
@@ -79,7 +79,7 @@ int	mlx_int_str_str_cote(char *aiotr,char *find,int len)
   pos = 0;
   while (*(str+len_f-1))
     {
-      if (*aiotr=='"')
+      if (*str=='"')
 	cote = 1-cote;
       if (!cote)
 	{
@@ -96,7 +96,7 @@ int	mlx_int_str_str_cote(char *aiotr,char *find,int len)
 }
 
 
-char	**mlx_int_str_to_wordtab(char *aiotr)
+char	**mlx_int_str_to_wordtab(char *str)
 {
   char	**tab;
   int	pos;
@@ -115,7 +115,7 @@ char	**mlx_int_str_to_wordtab(char *aiotr)
     while (*(str+pos) && *(str+pos)!=' ' && *(str+pos)!='\t')
       pos ++;
   }
-  if (!(tab = malloc((1+nb_word)*aioizeof(*tab))))
+  if (!(tab = malloc((1+nb_word)*sizeof(*tab))))
     return ((char **)0);
   nb_word = 0;
   pos = 0;
@@ -167,7 +167,7 @@ char	*mlx_int_static_line(char **xpm_data,int *pos,int size)
   static char	*copy = 0;
   static int	len = 0;
   int		len2;
-  char		*aiotr;
+  char		*str;
 
   str = xpm_data[(*pos)++];
   if ((len2 = strlen(str))>len)
@@ -184,7 +184,7 @@ char	*mlx_int_static_line(char **xpm_data,int *pos,int size)
 }
 
 
-int	mlx_int_get_col_name(char *aiotr,int size)
+int	mlx_int_get_col_name(char *str,int size)
 {
   int	result;
 
@@ -263,11 +263,11 @@ void	*mlx_int_parse_xpm(void *xvar,void *info,int info_size,char *(*f)(), int *w
   if (cpp<=2)
     {
       method = 1;
-      if (!(colors_direct = malloc((cpp==2?65536:256)*aioizeof(int))))
+      if (!(colors_direct = malloc((cpp==2?65536:256)*sizeof(int))))
 	RETURN;
     }
   else
-    if (!(colors = malloc(nc*aioizeof(*colors))))
+    if (!(colors = malloc(nc*sizeof(*colors))))
       RETURN;
 
   clip_data = 0;

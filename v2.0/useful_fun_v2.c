@@ -8,19 +8,19 @@ int		ft_spaceskip(char *line, int *i)
 	return (1);
 }
 
-void	ft_print_parse(t_all *aio)
+void	ft_print_parse(t_aio *aio)
 {
-	//int i;
+	int i;
 
-	//i = 0;
-	//while(aio->map.map[i])
-	//{
-	//	printf("%s\n", aio->map.map[i]);
-	//	i++;
-	//}
-	printf("MAP w=%d h=%d\n", aio->map.width, aio->map.height);
-	printf("res=%dx%d\ntex\n%s\n%s\n%s\n%s\n%s\n", aio->res.map_x, aio->res.map_y, aio->tex.east, aio->tex.north, aio->tex.south, aio->tex.sprite, aio->tex.west);
-	printf("PLAYER\n pos_x=%f pos_y=%f dir_x%f dir_y%f      dir_a%f\n", aio->plr.pos_x, aio->plr.pos_y, aio->plr.dir_x, aio->plr.dir_y, aio->plr.dir_a);
-	printf("RAY x=%f y=%f i=%d v=%f w=%f\n", aio->ray.x, aio->ray.y, aio->ray.i,aio->ray.v,aio->ray.w);
-	printf("HIT x=%f y=%f c=%c d=%f\n", aio->hit.x, aio->hit.y, aio->hit.c, aio->hit.d);
+	i = 0;
+	while(aio->map.map[i])
+	{
+		ft_printf("%s\n", aio->map.map[i]);
+		i++;
+	}
+	ft_printf("MAP w=%d h=%d\n", aio->map.width, aio->map.height);
+	ft_printf("res=%dx%d\ntex\n%s\n%s\n%s\n%s\n%s\n", aio->res.map_x, aio->res.map_y, aio->tex.east, aio->tex.north, aio->tex.south, aio->tex.sprite, aio->tex.west);
+	ft_printf("PLAYER\n pos_x=%f pos_y=%f dir_x%f dir_y%f      dir_a%f\n", aio->plr.pos_x, aio->plr.pos_y, aio->plr.dir_x, aio->plr.dir_y, aio->plr.dir_a);
+	ft_printf("RAY x=%f y=%f i=%d v=%f w=%f\n", aio->ray.x, aio->ray.y, aio->ray.i,aio->ray.v,aio->ray.w);
+	ft_printf("HIT x=%f y=%f c=%c d=%f\n", aio->hit.x, aio->hit.y, aio->hit.c, aio->hit.d);
 }

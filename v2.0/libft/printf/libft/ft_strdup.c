@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fjewfish <fjewfish@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fjewfish <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/29 11:27:30 by fjewfish          #+#    #+#             */
-/*   Updated: 2020/10/11 20:12:17 by fjewfish         ###   ########.fr       */
+/*   Updated: 2020/05/29 11:31:24 by fjewfish         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 ** ENOMEM.
 */
 
-char	*ft_strcpy(char *dest, char *aiorc)
+char	*ft_strcpy(char *dest, char *src)
 {
 	int i;
 
@@ -35,9 +35,9 @@ char	*ft_strcpy(char *dest, char *aiorc)
 	return (dest);
 }
 
-char	*ft_strdup(const char *aio1)
+char	*ft_strdup(const char *s1)
 {
-	char *aio_cpy;
+	char *s_cpy;
 
 	s_cpy = (char *)malloc(sizeof(char) * (ft_strlen(s1) + 1));
 	if (s_cpy == NULL)

@@ -1,6 +1,6 @@
 #include "main_header_v2.h"
 
-void	ft_reset(t_all *s)
+void	ft_reset(t_aio *s)
 {
 	//s->map.tab = NULL;
 	//s->tex.n = NULL;
@@ -23,7 +23,7 @@ void	ft_reset(t_all *s)
 	//s->err.p = 0;
 }
 
-void	ft_free(t_all *aio)
+void	ft_free(t_aio *aio)
 {
 	//int	i;
 
@@ -44,7 +44,7 @@ void	ft_free(t_all *aio)
 	//free(s->tex.j);
 }
 
-int		ft_set(t_all *aio, int key, int set)
+int		ft_set(t_aio *aio, int key, int set)
 {
 	if (key == ESC)
 		aio->key.e = set;
@@ -60,10 +60,10 @@ int		ft_set(t_all *aio, int key, int set)
 		aio->key.l = set;
 	else if (key == RIGHT)
 		aio->key.r = set;
-	else if (key == 3 && aio->map_mode == 0 && set != 0)
-		aio->map_mode = 1;
+	else if (key == 3 && aio->mapmod.on_off == 0 && set != 0)
+		aio->mapmod.on_off = 1;
 	else if (key == 3 && set != 0)
-		aio->map_mode =0;
+		aio->mapmod.on_off =0;
 	//else if (key == SHIFT && set)
 	//	ft_open(s);
 	//else if (key == SPACE)
@@ -83,17 +83,17 @@ int		ft_release(int key, void *arg)
 	return (1);
 }
 
-void	ft_move(t_all *aio, double coeff)
+void	ft_move(t_aio *aio, double coeff)
 {
 	char	c;
 
 	aio->plr.pos_x += coeff * (aio->plr.dir_x * SPEED / 100);
 	c = aio->map.map[(int)floor(aio->plr.pos_y)][(int)floor(aio->plr.pos_x)];
-	if (ft_is(WALL, c) || ft_is(DECOR, c) || ft_is(DOOR, c))
+	if (ft_is(WALL, c))
 		aio->plr.pos_x -= coeff * (aio->plr.dir_x* SPEED / 100);
 	aio->plr.pos_y += coeff * (aio->plr.dir_y * SPEED / 100);
 	c = aio->map.map[(int)floor(aio->plr.pos_y)][(int)floor(aio->plr.pos_x)];
-	if (ft_is(WALL, c) || ft_is(DECOR, c) || ft_is(DOOR, c))
+	if (ft_is(WALL, c))
 		aio->plr.pos_y -= coeff * (aio->plr.dir_y * SPEED / 100);
 	c = aio->map.map[(int)floor(aio->plr.pos_y)][(int)floor(aio->plr.pos_x)];
 	//if (ft_is(PICK, c))
@@ -110,17 +110,17 @@ void	ft_move(t_all *aio, double coeff)
 	//}
 }
 
-void	ft_strafe(t_all *aio, double coeff)
+void	ft_strafe(t_aio *aio, double coeff)
 {
 	char	c;
 
 	aio->plr.pos_x -= coeff * (aio->plr.dir_y * SPEED / 100);
 	c = aio->map.map[(int)floor(aio->plr.pos_y)][(int)floor(aio->plr.pos_x)];
-	if (ft_is(WALL, c) || ft_is(DECOR, c) || ft_is(DOOR, c))
+	if (ft_is(WALL, c))
 		aio->plr.pos_x += coeff * (aio->plr.dir_y * SPEED / 100);
 	aio->plr.pos_y += coeff * (aio->plr.dir_x * SPEED / 100);
 	c = aio->map.map[(int)floor(aio->plr.pos_y)][(int)floor(aio->plr.pos_x)];
-	if (ft_is(WALL, c) || ft_is(DECOR, c) || ft_is(DOOR, c))
+	if (ft_is(WALL, c))
 		aio->plr.pos_y -= coeff * (aio->plr.dir_x * SPEED / 100);
 	c = aio->map.map[(int)floor(aio->plr.pos_y)][(int)floor(aio->plr.pos_x)];
 	//if (ft_is(PICK, c))
@@ -137,7 +137,7 @@ void	ft_strafe(t_all *aio, double coeff)
 	//}
 }
 
-void	ft_rotate(t_all *aio, double c)
+void	ft_rotate(t_aio *aio, double c)
 {
 	double	dist;
 
@@ -153,7 +153,7 @@ void	ft_rotate(t_all *aio, double c)
 		aio->plr.dir_a = 360 - acos(aio->plr.dir_x / dist) * 180 / M_PI;
 }
 
-int		ft_key(t_all *aio)
+int		ft_key(t_aio *aio)
 {
 	if (aio->key.e)
 		ft_close(aio, 1);
@@ -178,7 +178,7 @@ int		ft_key(t_all *aio)
 
 
 	ft_draw(aio);
-	if (aio->map_mode == 1)
+	if (aio->mapmod.on_off == 1)
 		ft_map_mode(aio);
 
 

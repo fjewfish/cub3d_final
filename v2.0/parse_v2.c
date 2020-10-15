@@ -14,7 +14,7 @@ int		ft_atoi_i(char *line, int *i)
 	return (num);
 }
 
-int		ft_res(t_all *aio, char *line, int *i)
+int		ft_res(t_aio *aio, char *line, int *i)
 {
 	if (aio->res.map_x != 0 || aio->res.map_y != 0)
 		return (-3);
@@ -37,7 +37,7 @@ int		ft_colors(unsigned int *color, char *line, int *i)
 	int	g;
 	int	b;
 
-	if (*color != NONE)
+	if (*color != 0xFF000000)
 		return (-5);
 	(*i)++;
 	r = ft_atoi_i(line, i);
@@ -52,7 +52,7 @@ int		ft_colors(unsigned int *color, char *line, int *i)
 	return (0);
 }
 
-void	ft_pos(t_all *aio)
+void	ft_pos(t_aio *aio)
 {
 	char	c;
 	int		i;
@@ -81,7 +81,7 @@ void	ft_pos(t_all *aio)
 	}
 }
 
-//int		ft_slist(t_all *s)
+//int		ft_slist(t_aio *s)
 //{
 //	int		i;
 //	int		j;
@@ -110,7 +110,7 @@ void	ft_pos(t_all *aio)
 //	return (1);
 //}
 
-//int		ft_xpm(t_all *aio, unsigned int **adr, char *file)
+//int		ft_xpm(t_aio *aio, unsigned int **adr, char *file)
 //{
 //	int		fd;
 //	void	*img;
@@ -129,7 +129,7 @@ void	ft_pos(t_all *aio)
 //	return (0);
 //}
 
-int		ft_texture(t_all *aio, unsigned int **adr, char *line, int *i, char **texture)
+int		ft_texture(t_aio *aio, unsigned int **adr, char *line, int *i, char **texture)
 {
 	int		j;
 
@@ -157,7 +157,7 @@ int		ft_texture(t_all *aio, unsigned int **adr, char *line, int *i, char **textu
 }
 
 
-//int		ft_texture(t_all *aio, unsigned int **adr, char *line, int *i, char **texture)
+//int		ft_texture(t_aio *aio, unsigned int **adr, char *line, int *i, char **texture)
 //{
 //	int		j;
 
@@ -186,7 +186,7 @@ int		ft_texture(t_all *aio, unsigned int **adr, char *line, int *i, char **textu
 //}
 
 
-//int		ft_slablen(t_all *aio, char *line)
+//int		ft_slablen(t_aio *aio, char *line)
 //{
 //	int	i;
 //	int	count;
@@ -208,7 +208,7 @@ int		ft_texture(t_all *aio, unsigned int **adr, char *line, int *i, char **textu
 //	return (count);
 //}
 
-//char	*ft_slab(t_all *aio, char *line, int *i)
+//char	*ft_slab(t_aio *aio, char *line, int *i)
 //{
 //	char	*slab;
 //	int		j;
@@ -237,7 +237,7 @@ int		ft_texture(t_all *aio, unsigned int **adr, char *line, int *i, char **textu
 //	return (slab);
 //}
 
-//int		ft_map(t_all *aio, char *line, int *i)
+//int		ft_map(t_aio *aio, char *line, int *i)
 //{
 //	char	**tmp;
 //	int		j;
@@ -262,7 +262,7 @@ int		ft_texture(t_all *aio, unsigned int **adr, char *line, int *i, char **textu
 //		return (-13);
 //	return (0);
 //}
-//int		ft_map(t_all *aio, char *line, int *i)
+//int		ft_map(t_aio *aio, char *line, int *i)
 //{
 //	aio->map.err_map = 1;
 //	if (!aio->map.list)
@@ -274,7 +274,7 @@ int		ft_texture(t_all *aio, unsigned int **adr, char *line, int *i, char **textu
 //	return(0);
 //}
 
-int		ft_line(t_all *aio, char *line)
+int		ft_line(t_aio *aio, char *line)
 {
 	int		i;
 
@@ -302,11 +302,11 @@ int		ft_line(t_all *aio, char *line)
 		aio->map.err_parse = ft_colors(&aio->tex.ce, line, &i);
 
 	if (ft_spaceskip(line, &i) && aio->map.err_parse == 0 && line[i] != '\0')
-		return (ft_strerror(-10));
-	return (aio->map.err_parse < 0 ? ft_strerror(aio->map.err_parse) : 0);
+		return (ft_error_number(-10));
+	return (aio->map.err_parse < 0 ? ft_error_number(aio->map.err_parse) : 0);
 }
 
-int		ft_parse(t_all *aio, char *cub)
+int		ft_parse(t_aio *aio, char *cub)
 {
 	char	*line;
 	int		fd;
@@ -315,7 +315,7 @@ int		ft_parse(t_all *aio, char *cub)
 	ret = 1;
 	fd = open(cub, O_RDONLY);
 	if (fd == -1)
-		return (ft_strerror(-1));
+		return (ft_error_number(-1));
 	while (ret == 1)
 	{
 		ret = get_next_line(fd, &line);
@@ -326,32 +326,32 @@ int		ft_parse(t_all *aio, char *cub)
 	close(fd);
 	//aio->map.map = (char **)malloc_gc(sizeof(char **) * ft_lstsize(aio->map.list));
 	if (ret == -1 || ret == -3)
-		return (ft_strerror(ret + 1));
+		return (ft_error_number(ret + 1));
 	ft_pos(aio);
 	//aio->spr = NULL;
 	//ft_slist(s);
 	return (ft_parcheck(aio));
 }
 
-int		ft_parcheck(t_all *aio)
+int		ft_parcheck(t_aio *aio)
 {
 	if (aio->res.map_x <= 0 || aio->res.map_y <= 0)
-		return (ft_strerror(-14));
+		return (ft_error_number(-14));
 	else if ((aio->tex.no == NULL || aio->tex.so == NULL || aio->tex.we == NULL)
 			|| (aio->tex.ea == NULL || aio->tex.sp == NULL))
-		return (ft_strerror(-15));
-	else if (aio->tex.ce == NONE || aio->tex.fl == NONE)
-		return (ft_strerror(-16));
+		return (ft_error_number(-15));
+	else if (aio->tex.ce == 0xFF000000 || aio->tex.fl == 0xFF000000)
+		return (ft_error_number(-16));
 	else if (aio->map.err_player == 0)
-		return (ft_strerror(-17));
+		return (ft_error_number(-17));
 	else if (aio->map.err_player > 1)
-		return (ft_strerror(-18));
+		return (ft_error_number(-18));
 	else if (ft_mapcheck(aio) == -1)
-		return (ft_strerror(-19));
+		return (ft_error_number(-19));
 	return (1);
 }
 
-int		ft_mapcheck(t_all *aio)
+int		ft_mapcheck(t_aio *aio)
 {
 	int		i;
 	int		j;
@@ -389,13 +389,17 @@ int		ft_mapcheck(t_all *aio)
 
 //////////////////////////////////////////////////
 
-int		ft_xpm(t_all *s, unsigned int **adr, char *file)
+int		ft_xpm(t_aio *s, unsigned int **adr, char *file)
 {
+	int i;
 	int		fd;
 	void	*img;
 	int		tab[5];
 
-	if (ft_namecheck(file, "xpm") == 0)
+	i = 0;
+	while (file[i])
+		i++;
+	if (ft_strcmp(&file[i - 4], ".xpm") != 0)
 		return (-1);
 	if ((fd = open(file, O_RDONLY)) == -1)
 		return (-1);
@@ -408,7 +412,7 @@ int		ft_xpm(t_all *s, unsigned int **adr, char *file)
 	return (0);
 }
 
-//int		ft_texture(t_all *s, unsigned int **adr, char *line, int *i)
+//int		ft_texture(t_aio *s, unsigned int **adr, char *line, int *i)
 //{
 //	char	*file;
 //	int		j;
@@ -432,7 +436,7 @@ int		ft_xpm(t_all *s, unsigned int **adr, char *file)
 //	return (j == -1 ? -9 : 0);
 //}
 
-int		ft_slablen(t_all *s, char *line)
+int		ft_slablen(t_aio *s, char *line)
 {
 	int	i;
 	int	count;
@@ -454,7 +458,7 @@ int		ft_slablen(t_all *s, char *line)
 	return (count);
 }
 
-char	*ft_slab(t_all *s, char *line, int *i)
+char	*ft_slab(t_aio *s, char *line, int *i)
 {
 	char	*slab;
 	int		j;
@@ -483,7 +487,7 @@ char	*ft_slab(t_all *s, char *line, int *i)
 	return (slab);
 }
 
-int		ft_map(t_all *aio, char *line, int *i)
+int		ft_map(t_aio *aio, char *line, int *i)
 {
 	char	**tmp;
 	int		j;

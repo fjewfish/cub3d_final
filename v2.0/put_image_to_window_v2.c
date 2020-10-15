@@ -6,21 +6,11 @@ int		ft_is(int n, char c)
 		return (1);
 	else if (n == WALL && (c == '4' || c == '5' || c == '6'))
 		return (1);
-	else if ((n == SPRITE || n == PICK) && (c == '7' || c == '8' || c == '-'))
-		return (1);
-	else if ((n == SPRITE || n == DECOR) && (c == '9' || c == '+' || c == '#'))
-		return (1);
-	else if ((n == SPRITE || n == DECOR) && (c == '&' || c == '$' || c == '*'))
-		return (1);
-	else if (n == ENEMY && (c == '+' || c == '#' || c == '&'))
-		return (1);
-	else if (n == ENEMY && (c == '$' || c == '*'))
+	else if ((n == ITEM) && (c == '7' || c == '8' || c == '-'))
 		return (1);
 	else if (n == POS && (c == 'N' || c == 'S' || c == 'E' || c == 'W'))
 		return (1);
 	else if (n == 0 && (c == '0' || c == 'O' || c == 'X'))
-		return (1);
-	else if (n == DOOR && c == 'D')
 		return (1);
 	else
 		return (0);
@@ -28,7 +18,7 @@ int		ft_is(int n, char c)
 
 ////////////////////////////////////////////////////////////
 
-int		ft_draw(t_all *s)
+int		ft_draw(t_aio *s)
 {
 	//if (ft_endflag(s))
 	//	ft_close(s, 1);
@@ -43,7 +33,7 @@ int		ft_draw(t_all *s)
 	return (0);
 }
 
-void	ft_screen(t_all *s)
+void	ft_screen(t_aio *s)
 {
 	//int		bpp;
 	//int		sl;
@@ -55,7 +45,7 @@ void	ft_screen(t_all *s)
 	//s->ray.i = 0;
 	//while (s->ray.i < s->res.map_y / 2)
 	//	ft_floor(s);
-	s->stk = malloc(sizeof(t_stk) * s->res.map_x);
+	// s->stk = malloc(sizeof(t_stk) * s->res.map_x);
 	s->ray.i = 0;
 	while (s->ray.i < s->res.map_x)
 	{
@@ -64,7 +54,7 @@ void	ft_screen(t_all *s)
 		ft_ver(s);
 		ft_hor(s);
 		ft_stock(s);
-		if (s->map_mode != 1)
+		if (s->mapmod.on_off != 1)
 			ft_column(s, ft_size(s));
 		if (s->ray.i == 0)
 		{
@@ -80,7 +70,7 @@ void	ft_screen(t_all *s)
 	//ft_hud(s);
 }
 
-unsigned int	ft_pixel(t_all *s, double i)
+unsigned int	ft_pixel(t_aio *s, double i)
 {
 	int	index;
 
@@ -117,7 +107,7 @@ unsigned int	ft_pixel(t_all *s, double i)
 	return (GREEN);
 }
 
-void			  ft_column(t_all *s, int size)
+void			  ft_column(t_aio *s, int size)
 {
 	unsigned int	color;
 	int				start;
@@ -141,7 +131,7 @@ void			  ft_column(t_all *s, int size)
 		}
 		else if (count == size)
 			color = s->tex.fl;
-		if (color != NONE)
+		if (color != 0xFF000000)
 		{
 			char    *dst;
 			dst = (char *)(s->img.adr + (y_con * s->img.line_length + x_con * (s->img.bits_per_pixel / 8)) / 4);
@@ -162,7 +152,7 @@ void			  ft_column(t_all *s, int size)
 	s->ray.i -= s->res.map_x * s->res.map_y;
 }
 
-//unsigned int	ft_shadow(t_all *s, unsigned int col)
+//unsigned int	ft_shadow(t_aio *s, unsigned int col)
 //{
 //	double	shadow;
 //	int		r;
@@ -182,7 +172,7 @@ void			  ft_column(t_all *s, int size)
 //}
 
 
-void	ft_ray(t_all *s)
+void	ft_ray(t_aio *s)
 {
 	double	angle;
 	double	dist;
@@ -195,7 +185,7 @@ void	ft_ray(t_all *s)
 	s->ray.y /= dist;
 }
 
-void	ft_dir(t_all *s)
+void	ft_dir(t_aio *s)
 {
 	if (s->ray.x >= 0)
 		s->ray.v = 1;
@@ -207,7 +197,7 @@ void	ft_dir(t_all *s)
 		s->ray.w = 0;
 }
 
-void	ft_ver(t_all *s)
+void	ft_ver(t_aio *s)
 {
 	double	x;
 	double	y;
@@ -236,7 +226,7 @@ void	ft_ver(t_all *s)
 	s->hit.c = 0;
 }
 
-void	ft_hor(t_all *s)
+void	ft_hor(t_aio *s)
 {
 	double	y;
 	double	x;
@@ -266,14 +256,14 @@ void	ft_hor(t_all *s)
 }
 
 
-void			ft_stock(t_all *aio)
+void			ft_stock(t_aio *aio)
 {
-	aio->stk[aio->ray.i].x = aio->ray.x;
-	aio->stk[aio->ray.i].y = aio->ray.y;
-	aio->stk[aio->ray.i].d = aio->hit.d;
+// 	aio->stk[aio->ray.i].x = aio->ray.x;
+// 	aio->stk[aio->ray.i].y = aio->ray.y;
+// 	aio->stk[aio->ray.i].d = aio->hit.d;
 }
 
-int				ft_size(t_all *aio)
+int				ft_size(t_aio *aio)
 {
 	double	correc;
 	double	fisheye;

@@ -1,10 +1,10 @@
 
 #include "main_header_v2.h"
-void            my_mlx_pixel_put(t_all *aio, int x, int y, int color, int scale);
-void            my_mlx_pixel_put_plr(t_all *aio, double x, double y, int color, int scale);
-void            my_mlx_pixel_put_ray(t_all *aio, double x, double y, int color, int cale);
+void            my_mlx_pixel_put(t_aio *aio, int x, int y, int color, int scale);
+void            my_mlx_pixel_put_plr(t_aio *aio, double x, double y, int color, int scale);
+void            my_mlx_pixel_put_ray(t_aio *aio, double x, double y, int color, int cale);
 
-void	ft_map_mini(t_all *aio)
+void	ft_map_mini(t_aio *aio)
 {
 	int max_x;
 	int max_y;
@@ -37,7 +37,7 @@ my_mlx_pixel_put_plr(aio, aio->plr.pos_x, aio->plr.pos_y, GREEN, scale);
 my_mlx_pixel_put_ray(aio, aio->plr.pos_x, aio->plr.pos_y, PURPLE, scale);
 }
 
-void	ft_map_mode(t_all *aio)
+void	ft_map_mode(t_aio *aio)
 {
 	int max_x;
 	int max_y;
@@ -91,7 +91,7 @@ mlx_string_put(aio->mlx.ptr, aio->win.ptr , aio->res.map_x - 150, aio->res.map_y
 }
 
 
-void            my_mlx_pixel_put(t_all *aio, int x, int y, int color, int scale)
+void            my_mlx_pixel_put(t_aio *aio, int x, int y, int color, int scale)
  {
 	int x_limit;
 	int y_limit;
@@ -117,7 +117,7 @@ void            my_mlx_pixel_put(t_all *aio, int x, int y, int color, int scale)
 	}
  }
 
-void            my_mlx_pixel_put_plr(t_all *aio, double x, double y, int color, int scale)
+void            my_mlx_pixel_put_plr(t_aio *aio, double x, double y, int color, int scale)
 {
 	//printf("x = %f, y = %f, scale = %d\n", x, y, scale);
 	double x_limit;
@@ -147,7 +147,7 @@ void            my_mlx_pixel_put_plr(t_all *aio, double x, double y, int color, 
 }
 
 //Алгоритм Брезенхэма
-void		my_mlx_pixel_put_ray(t_all *aio, double x, double y, int color, int scale)
+void		my_mlx_pixel_put_ray(t_aio *aio, double x, double y, int color, int scale)
 {
 //LEFT//LEFT//LEFT//LEFT//LEFT//LEFT//LEFT//LEFT//LEFT//LEFT//LEFT//LEFT//LEFT//LEFT//LEFT//LEFT//LEFT//LEFT
 	{

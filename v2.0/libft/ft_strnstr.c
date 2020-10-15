@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fjewfish <fjewfish@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fjewfish <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/29 11:38:50 by fjewfish          #+#    #+#             */
-/*   Updated: 2020/10/11 20:12:17 by fjewfish         ###   ########.fr       */
+/*   Updated: 2020/06/02 01:05:30 by fjewfish         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@
 ** should only be used when portability is not a concern.
 */
 
-char	*ft_strnstr(const char *aio1, const char *aio2, size_t n)
+char	*ft_strnstr(const char *s1, const char *s2, size_t n)
 {
 	size_t	i;
 	size_t	k;
-	char	*aio3;
+	char	*s3;
 
 	i = 0;
 	k = 0;

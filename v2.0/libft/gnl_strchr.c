@@ -3,25 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   gnl_strchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fjewfish <fjewfish@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fjewfish <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 22:54:49 by fjewfish          #+#    #+#             */
-/*   Updated: 2020/10/11 20:12:17 by fjewfish         ###   ########.fr       */
+/*   Updated: 2020/09/21 22:54:59 by fjewfish         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*gnl_ft_strchr(const char *aio)
+char	*gnl_ft_strchr(const char *s)
 {
-	char	*aiotr;
+	char	*str;
 
 	if (!s)
 		return (NULL);
 	str = (char *)s;
-	while (*aiotr != '\n')
+	while (*str != '\n')
 	{
-		if (*aiotr == '\0')
+		if (*str == '\0')
 		{
 			return (NULL);
 		}

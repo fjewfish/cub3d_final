@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exit_errors_v2.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fjewfish <fjewfish@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/10/12 17:29:01 by fjewfish          #+#    #+#             */
+/*   Updated: 2020/10/16 00:22:54 by fjewfish         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "main_header_v2.h"
 
-int		ft_close(t_all *aio, int win)
+int		ft_close(t_aio *aio, int win)
 {
 	//int	i;
 
@@ -21,7 +33,7 @@ int		ft_close(t_all *aio, int win)
 	return (1);
 }
 
-int		ft_strerror(int err)
+int		ft_error_number(int err)
 {
 	(err == -1) ? write(2, "Error : Couldn't open file (FD)\n", 32) : 0;
 	(err == -2) ? write(2, "Error : Couldn't parse file (GNL)\n", 34) : 0;

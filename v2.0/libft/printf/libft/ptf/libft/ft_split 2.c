@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split 2.c                                       :+:      :+:    :+:   */
+/*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fjewfish <fjewfish@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fjewfish <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/29 11:25:21 by fjewfish          #+#    #+#             */
-/*   Updated: 2020/10/11 20:12:17 by fjewfish         ###   ########.fr       */
+/*   Updated: 2020/05/31 17:44:05 by fjewfish         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 ** ended by a NULL pointer.
 */
 
-void	ft_free_spl(char **aioplited, size_t k)
+void	ft_free_spl(char **splited, size_t k)
 {
 	while (k > 0)
 	{
@@ -33,7 +33,7 @@ void	ft_free_spl(char **aioplited, size_t k)
 	free(splited[k]);
 }
 
-void	**ft_write_words(char *aiotr, char c, char **aioplited, size_t count)
+void	**ft_write_words(char *str, char c, char **splited, size_t count)
 {
 	size_t start;
 	size_t end;
@@ -61,7 +61,7 @@ void	**ft_write_words(char *aiotr, char c, char **aioplited, size_t count)
 	return (NULL);
 }
 
-size_t	ft_how_many_words(char *aio, char c)
+size_t	ft_how_many_words(char *s, char c)
 {
 	size_t i;
 	size_t words;
@@ -90,10 +90,10 @@ size_t	ft_how_many_words(char *aio, char c)
 	return (words + 1);
 }
 
-char	**ft_split(char const *aio, char c)
+char	**ft_split(char const *s, char c)
 {
-	char	**aioplited;
-	char	*aiotr;
+	char	**splited;
+	char	*str;
 	size_t	count;
 
 	if (s == NULL)

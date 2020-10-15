@@ -6,7 +6,7 @@
 /*   By: fjewfish <fjewfish@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/29 11:37:39 by fjewfish          #+#    #+#             */
-/*   Updated: 2020/10/11 20:12:17 by fjewfish         ###   ########.fr       */
+/*   Updated: 2020/10/12 16:53:59 by fjewfish         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 ** characters that appear after a `\0' character are not compared.
 */
 
-int		ft_strncmp(const char *aio1, const char *aio2, size_t n)
+int		ft_strncmp(const char *s1, const char *s2, size_t n)
 {
 	size_t	i;
 
@@ -30,6 +30,18 @@ int		ft_strncmp(const char *aio1, const char *aio2, size_t n)
 	while (s1[i] != '\0' && s1[i] == s2[i] && i < n - 1)
 		i++;
 	if (n != 0)
+		return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+	return (0);
+}
+
+int		ft_strcmp(const char *s1, const char *s2)
+{
+	size_t	i;
+
+	i = 0;
+	while (s1[i] != '\0' && s1[i] == s2[i])
+		i++;
+	if (s1[i] != '\0' || s2[i] != '\0')
 		return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 	return (0);
 }

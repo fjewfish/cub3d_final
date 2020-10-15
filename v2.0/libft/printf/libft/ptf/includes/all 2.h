@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   all 2.h                                            :+:      :+:    :+:   */
+/*   all.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fjewfish <fjewfish@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fjewfish <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/15 22:42:58 by fjewfish          #+#    #+#             */
-/*   Updated: 2020/10/11 20:12:17 by fjewfish         ###   ########.fr       */
+/*   Updated: 2020/07/28 11:25:10 by fjewfish         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void				ft_parse_flags_wbonus(const char *line,
 void				ft_init_format_str(t_fps *format_str);
 int					ft_type_wework(int type);
 int					ft_flag_wework(int flag);
-void				if_dot(const char *line, int *aiotart,
+void				if_dot(const char *line, int *start,
 					t_fps *format_str, va_list argptr);
 void				if_minus(t_fps *format_str);
 void				if_width(va_list argptr, t_fps *format_str);
@@ -72,9 +72,9 @@ void				if_char(char c, t_fps *format_str);
 ** string
 */
 
-void				if_string(char *aiotr, t_fps *format_str);
-void				ft_print_str_plus(char *aiotr, t_fps *format_str);
-void				ft_print_str_minus(char *aiotr, t_fps *format_str);
+void				if_string(char *str, t_fps *format_str);
+void				ft_print_str_plus(char *str, t_fps *format_str);
+void				ft_print_str_minus(char *str, t_fps *format_str);
 void				ft_print_width_str(t_fps *format_str, int max,
 										int len_we_print);
 

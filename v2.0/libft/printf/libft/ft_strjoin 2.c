@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin 2.c                                     :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fjewfish <fjewfish@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fjewfish <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/29 11:32:43 by fjewfish          #+#    #+#             */
-/*   Updated: 2020/10/11 20:12:17 by fjewfish         ###   ########.fr       */
+/*   Updated: 2020/05/31 17:27:40 by fjewfish         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,27 +22,27 @@
 ** of ’s1’ and ’s2’.
 */
 
-void	ft_write_result(char const *aio1, char const *aio2, char *result)
+void	ft_write_result(char const *s1, char const *s2, char *result)
 {
 	size_t	i;
 
 	i = 0;
-	while (*aio1)
+	while (*s1)
 	{
-		result[i] = *aio1;
+		result[i] = *s1;
 		i++;
 		s1++;
 	}
-	while (*aio2)
+	while (*s2)
 	{
-		result[i] = *aio2;
+		result[i] = *s2;
 		i++;
 		s2++;
 	}
 	result[i] = 0;
 }
 
-char	*ft_strjoin(char const *aio1, char const *aio2)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
 	char	*result;
 	size_t	len;

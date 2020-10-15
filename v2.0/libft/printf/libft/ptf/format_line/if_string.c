@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   if_string.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fjewfish <fjewfish@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fjewfish <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/18 18:21:16 by fjewfish          #+#    #+#             */
-/*   Updated: 2020/10/11 20:12:17 by fjewfish         ###   ########.fr       */
+/*   Updated: 2020/07/26 17:03:02 by fjewfish         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void		ft_print_width_str(t_fps *format_str, int max, int len_we_print)
 	}
 }
 
-void		ft_print_str_minus(char *aiotr, t_fps *format_str)
+void		ft_print_str_minus(char *str, t_fps *format_str)
 {
 	int		i;
 
@@ -42,7 +42,7 @@ void		ft_print_str_minus(char *aiotr, t_fps *format_str)
 	format_str->length_we_print += i;
 }
 
-void		ft_print_str_plus(char *aiotr, t_fps *format_str)
+void		ft_print_str_plus(char *str, t_fps *format_str)
 {
 	int		i;
 
@@ -62,7 +62,7 @@ void		ft_print_str_plus(char *aiotr, t_fps *format_str)
 	format_str->length_we_print += i;
 }
 
-void		if_string(char *aiotr, t_fps *format_str)
+void		if_string(char *str, t_fps *format_str)
 {
 	int		len_str;
 
