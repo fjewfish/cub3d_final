@@ -84,11 +84,11 @@ typedef struct	s_map
 	int			cut_after;
 	int			cut_left;
 	int			cut_right;
-	t_list		*list;
 	char		**map;
 	int			width;
 	int			height;
 	int			sprite_count;
+	t_list		*list;
 }				t_map;
 
 typedef struct	s_tex
@@ -223,7 +223,7 @@ void	ft_map_mini(t_aio *aio);
 
 
 
-
+void	ft_pos(t_aio *aio);
 
 
 //	M_MALLOC_GC

@@ -6,12 +6,12 @@
 /*   By: fjewfish <fjewfish@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/13 12:58:17 by fjewfish          #+#    #+#             */
-/*   Updated: 2020/10/16 02:13:52 by fjewfish         ###   ########.fr       */
+/*   Updated: 2020/10/16 06:44:08 by fjewfish         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main_header_v2.h"
-
+#include "stdio.h"
 int		ft_rnswesfc(t_aio *aio, char *line);
 int		ft_skip_spases(char *line, int *i);
 int		ft_atoi_i(char *line, int *i);
@@ -20,7 +20,7 @@ int		ft_texture(t_aio *aio, unsigned int **adr, char *line, int *i, char **textu
 int		ft_rgb(unsigned int *color, char *line, int *i);
 int		ft_makemap_list(t_aio *aio, char *line);
 int		ft_map_parse(t_aio *aio);
-void	ft_write_and_cut(t_aio *aio, int *cut_left, int *cut_right);
+int		ft_write_and_cut(t_aio *aio, int *cut_left, int *cut_right);
 int		ft_skip_only_space_zero_left(char *line);
 int		ft_skip_only_space_zero_right(char *line);
 
@@ -70,15 +70,17 @@ int		ft_parse(t_aio *aio, char *cub)
 			if (aio->parse_error.map_empty_line == 0 && line[i] != '\0')
 				ft_makemap_list(aio, line);
 		}
-		free(line);
+			// free(line);
 	}
 	close(fd);
+	ft_lstadd_back(&aio->map.list, ft_lstnew((void *)line));
 	err = ft_map_parse(aio);
-	if (err < 0)
-		return (ft_error_number(err));//?????
+	// if (err < 0)
+	// 	return (ft_error_number(err));//?????
 	ft_pos(aio);
 	//aio->spr = NULL;
 	//ft_slist(s);
+	// ft_print_parse(aio);
 	return (ft_parcheck(aio));
 }
 
@@ -106,11 +108,14 @@ int		ft_rnswesfc(t_aio *aio, char *line)
 	else if (line[i] == 'C' && line[i + 1] == ' ')
 		aio->parse_error.settings = ft_rgb(&aio->tex.ce, line, &i);
 	else
-		aio->parse_error.map_trigger == 1;
+		aio->parse_error.map_trigger = 1;
 	ft_skip_spases(line, &i);
-	if (aio->parse_error.settings == 0 && line[i] != '\0')
+	if (aio->parse_error.settings == 0 && line[i] != '\0' && aio->parse_error.map_trigger != 1)
+	{
 		return (-10);
-	return (aio->parse_error.settings);
+	}
+	// return (aio->parse_error.settings);
+	return (1); //?????
 }
 
 int		ft_resolution(t_aio *aio, char *line, int *i)
@@ -129,25 +134,37 @@ int		ft_resolution(t_aio *aio, char *line, int *i)
 		return (-4);
 	return (0);
 }
+//////
+int		ft_namecheck(char *arg, char *ext)
+{
+	int	i;
 
+	i = 0;
+	while (arg[i] != '\0')
+		i++;
+	if ((i > 4 && arg[i - 1] == ext[2] && arg[i - 2] == ext[1])
+		&& (arg[i - 3] == ext[0] && arg[i - 4] == '.'))
+		return (1);
+	return (0);
+}
+//////
 int		ft_texture(t_aio *aio, unsigned int **adr, char *line, int *i, char **texture)
 {
 	int		fd;
 	void	*img;
 	int		tab[5];
-
 	if (*adr != NULL)
 		return (-7);
 	(*i) += 2;
 	ft_skip_spases(line, i);
 	*texture = ft_strdup_gc(&line[*i]);
 	(*i) += ft_strlen(*texture);
-	if (ft_namecheck(texture, "xpm") == 0)
+	if (ft_namecheck(*texture, "xpm") == 0)
 		return (-1);
-	if ((fd = open(texture, O_RDONLY)) == -1)
+	if ((fd = open(*texture, O_RDONLY)) == -1)
 		return (-1);
 	close(fd);
-	img = mlx_xpm_file_to_image(aio->mlx.ptr, texture, &tab[0], &tab[1]);
+	img = mlx_xpm_file_to_image(aio->mlx.ptr, *texture, &tab[0], &tab[1]);
 	if (img == NULL || tab[0] != 64 || tab[1] != 64)
 		return (-1);
 	*adr = (unsigned int *)mlx_get_data_addr(img, &tab[2], &tab[3], &tab[4]);
@@ -160,7 +177,6 @@ int		ft_rgb(unsigned int *color, char *line, int *i)
 	int	r;
 	int	g;
 	int	b;
-
 	if (*color != 0xFF000000)
 		return (-5);
 	(*i)++;
@@ -186,20 +202,20 @@ int		ft_makemap_list(t_aio *aio, char *line)
 	int left;
 	int right;
 	int len;
-
 	i = 0;
+
 	len = ft_strlen(line);
 	if (!aio->map.list)
 	{
 		aio->map.cut_left = ft_strlen((const char *)line);
 		aio->map.cut_right = ft_strlen((const char *)line);
-		aio->map.list = ft_lstnew(line);
+		aio->map.list = ft_lstnew((void *)line);
 		if (len > aio->map.width)
 			aio->map.width = len;
 	}
 	else
 	{
-		ft_lstadd_back(&aio->map.list, ft_lstnew(line));
+		ft_lstadd_back(&aio->map.list, ft_lstnew((void *)line));
 		if (len > aio->map.width)
 			aio->map.width = len;
 	}
@@ -208,12 +224,14 @@ int		ft_makemap_list(t_aio *aio, char *line)
 		aio->map.cut_after++;
 	else
 		aio->map.cut_after = 0;
-	left = ft_skip_only_space_zero_left((const char*)line);
-	right = ft_skip_only_space_zero_right((const char*)line);
+	left = ft_skip_only_space_zero_left(line);
+	right = ft_skip_only_space_zero_right(line);
+	printf("left -- %d,    right -- %d\n",left, right);
 	if (left < aio->map.cut_left)
-		aio->map.cut_left = right;
+		aio->map.cut_left = left;
 	if (right < aio->map.cut_right)
 		aio->map.cut_right = right;
+printf("aio->map.cut_left -- %d,   aio->map.cut_right = right -- %d\n", aio->map.cut_left, aio->map.cut_right);
 	return(0);
 }
 
@@ -221,14 +239,14 @@ int		ft_map_parse(t_aio *aio)
 {
 	int cut_left;
 	int cut_right;
-
-	aio->map.height = ft_lstsize(aio->map.list) - aio->map.cut_after;
-	if (!(aio->map.map = (char **)malloc_gc(aio->map.height)))
+	aio->map.height = ft_lstsize(aio->map.list) - aio->map.cut_after - 1;
+	if (!(aio->map.map = (char **)malloc_gc(aio->map.height * sizeof(char *) + 1)))
 		return(-11);
-	ft_write_and_cut(aio, &cut_left, &cut_right);
+	aio->map.map[aio->map.height] = NULL;
+	return (ft_write_and_cut(aio, &cut_left, &cut_right));
 }
 
-void	ft_write_and_cut(t_aio *aio, int *cut_left, int *cut_right)
+int		ft_write_and_cut(t_aio *aio, int *cut_left, int *cut_right)
 {
 	int i;
 	int j;
@@ -240,16 +258,24 @@ void	ft_write_and_cut(t_aio *aio, int *cut_left, int *cut_right)
 	aio->map.width = aio->map.width - aio->map.cut_right - aio->map.cut_left;
 	while (i < aio->map.height)
 	{
-		j = aio->map.cut_left;
-		// len = ft_strlen(tmp->content);
-		aio->map.map[i] = (char *)calloc_gc(sizeof(char) * aio->map.width);
-		while (tmp->content[i] && i < (len - aio->map.cut_right))
+		j = 0;
+		aio->map.map[i] = (char *)calloc_gc(sizeof(char), aio->map.width + 1);
+		while (((char *)tmp->content)[j] && j < aio->map.width + aio->map.cut_left)
 		{
-			i++;
+			if (((char *)tmp->content)[j] != '0' && ((char *)tmp->content)[j] != '1' && ((char *)tmp->content)[j] != '2' &&
+				((char *)tmp->content)[j] != 'N' && ((char *)tmp->content)[j] != 'S' && ((char *)tmp->content)[j] != 'W' &&
+				((char *)tmp->content)[j] != 'E' && ((char *)tmp->content)[j] != ' ')
+				return (-12);
+			else if (((char *)tmp->content)[j] == ' ')
+				aio->map.map[i][j + aio->map.cut_left] = '0';
+			else
+				aio->map.map[i][j + aio->map.cut_left] = (((char *)tmp->content)[j]);
+			j++;
 		}
 		tmp = tmp->next;
 		i++;
 	}
+	return (1);
 }
 
 int		ft_skip_only_space_zero_left(char *line)
@@ -271,83 +297,83 @@ int		ft_skip_only_space_zero_right(char *line)
 	i = len - 1;
 	while (line[i] == ' ' || line[i] == '0')
 		i--;
-	return (len - i);
+	return (len - i - 1);
 }
 /* ************************************************************************** */
-int		ft_slablen(t_aio *s, char *line)
-{
-	int	i;
-	int	count;
+// int		ft_slablen(t_aio *s, char *line)
+// {
+// 	int	i;
+// 	int	count;
 
-	i = 0;
-	count = 0;
-	while (line[i] != '\0')
-	{
-		if (line[i] == '0' || line[i] == '1' || line[i] == '2')
-			count++;
-		else if (line[i] == 'N' || line[i] == 'S' || line[i] == 'W')
-			count++;
-		else if (line[i] == 'E')
-			count++;
-		i++;
-	}
-	if (s->map.width != 0 && s->map.width != count)
-		return (-1);
-	return (count);
-}
+// 	i = 0;
+// 	count = 0;
+// 	while (line[i] != '\0')
+// 	{
+// 		if (line[i] == '0' || line[i] == '1' || line[i] == '2')
+// 			count++;
+// 		else if (line[i] == 'N' || line[i] == 'S' || line[i] == 'W')
+// 			count++;
+// 		else if (line[i] == 'E')
+// 			count++;
+// 		i++;
+// 	}
+// 	if (s->map.width != 0 && s->map.width != count)
+// 		return (-1);
+// 	return (count);
+// }
 
-char	*ft_slab(t_aio *s, char *line, int *i)
-{
-	char	*slab;
-	int		j;
+// char	*ft_slab(t_aio *s, char *line, int *i)
+// {
+// 	char	*slab;
+// 	int		j;
 
-	if (!(slab = malloc(sizeof(char) * (ft_slablen(s, line) + 1))))
-		return (NULL);
-	j = 0;
-	while (line[*i] != '\0')
-	{
-		if ((line[*i] == '0' || line[*i] == '1' || line[*i] == 'N')
-			|| (line[*i] == 'E' || line[*i] == 'S' || line[*i] == 'W'))
-			slab[j++] = line[*i];
-		else if (line[*i] == '2')
-		{
-			slab[j++] = line[*i];
-			s->map.sprite_count++;
-		}
-		else if (line[*i] != ' ')
-		{
-			free(slab);
-			return (NULL);
-		}
-		(*i)++;
-	}
-	slab[j] = '\0';
-	return (slab);
-}
+// 	if (!(slab = malloc(sizeof(char) * (ft_slablen(s, line) + 1))))
+// 		return (NULL);
+// 	j = 0;
+// 	while (line[*i] != '\0')
+// 	{
+// 		if ((line[*i] == '0' || line[*i] == '1' || line[*i] == 'N')
+// 			|| (line[*i] == 'E' || line[*i] == 'S' || line[*i] == 'W'))
+// 			slab[j++] = line[*i];
+// 		else if (line[*i] == '2')
+// 		{
+// 			slab[j++] = line[*i];
+// 			s->map.sprite_count++;
+// 		}
+// 		else if (line[*i] != ' ')
+// 		{
+// 			free(slab);
+// 			return (NULL);
+// 		}
+// 		(*i)++;
+// 	}
+// 	slab[j] = '\0';
+// 	return (slab);
+// }
 
-int		ft_map(t_aio *aio, char *line, int *i)
-{
-	char	**tmp;
-	int		j;
+// int		ft_map(t_aio *aio, char *line, int *i)
+// {
+// 	char	**tmp;
+// 	int		j;
 
-	// aio->map.err_map = 1;
-	if (!(tmp = malloc(sizeof(char *) * (aio->map.height + 2))))
-		return (-11);
-	j = -1;
-	while (++j < aio->map.height)
-		tmp[j] = aio->map.map[j];
-	if ((tmp[aio->map.height] = ft_slab(aio, line, i)) == NULL)
-	{
-		free(tmp);
-		return (-12);
-	}
-	tmp[aio->map.height + 1] = NULL;
-	if (aio->map.height > 0)
-		free(aio->map.map);
-	aio->map.map = tmp;
-	aio->map.height++;
-	if ((aio->map.width = ft_slablen(aio, line)) == -1)
-		return (-13);
-	return (0);
-}
+// 	// aio->map.err_map = 1;
+// 	if (!(tmp = malloc(sizeof(char *) * (aio->map.height + 2))))
+// 		return (-11);
+// 	j = -1;
+// 	while (++j < aio->map.height)
+// 		tmp[j] = aio->map.map[j];
+// 	if ((tmp[aio->map.height] = ft_slab(aio, line, i)) == NULL)
+// 	{
+// 		free(tmp);
+// 		return (-12);
+// 	}
+// 	tmp[aio->map.height + 1] = NULL;
+// 	if (aio->map.height > 0)
+// 		free(aio->map.map);
+// 	aio->map.map = tmp;
+// 	aio->map.height++;
+// 	if ((aio->map.width = ft_slablen(aio, line)) == -1)
+// 		return (-13);
+// 	return (0);
+// }
 

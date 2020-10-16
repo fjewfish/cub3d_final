@@ -6,7 +6,7 @@
 /*   By: fjewfish <fjewfish@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 14:25:31 by fjewfish          #+#    #+#             */
-/*   Updated: 2020/10/12 17:52:10 by fjewfish         ###   ########.fr       */
+/*   Updated: 2020/10/16 02:53:10 by fjewfish         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ int			main(int argc, char **argv)
 	while (argv[1][i] != '\0')
 		i++;
 	if (i > 4 && ft_strcmp(&argv[1][i - 4], ".cub") != 0)
+		ft_putstr_fd("WTF? PS change to *.cub\n", 2);
+	else if (i <= 4)
 		ft_putstr_fd("WTF? PS change to *.cub\n", 2);
 	else if (argc == 2)
 		ft_cub(argv[1], 0);
