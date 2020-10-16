@@ -6,7 +6,7 @@
 /*   By: fjewfish <fjewfish@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/13 12:58:17 by fjewfish          #+#    #+#             */
-/*   Updated: 2020/10/16 06:44:08 by fjewfish         ###   ########.fr       */
+/*   Updated: 2020/10/16 07:52:54 by fjewfish         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int		ft_parse(t_aio *aio, char *cub)
 			err = ft_rnswesfc(aio, line);//Error : Couldn't parse file (GNL)
 		if (err == 1 && aio->parse_error.map_trigger == 1)
 		{
-			ft_skip_spases(line, &i);
+			// ft_skip_spases(line, &i);'?????????????????????
 			if (aio->parse_error.map_empty_line == 0 && line[i] != '\0')
 				ft_makemap_list(aio, line);
 		}
@@ -80,7 +80,7 @@ int		ft_parse(t_aio *aio, char *cub)
 	ft_pos(aio);
 	//aio->spr = NULL;
 	//ft_slist(s);
-	// ft_print_parse(aio);
+	ft_print_parse(aio);
 	return (ft_parcheck(aio));
 }
 
@@ -219,19 +219,17 @@ int		ft_makemap_list(t_aio *aio, char *line)
 		if (len > aio->map.width)
 			aio->map.width = len;
 	}
-	ft_skip_spases(line, &i);
-	if (line[i] == 0)
+		ft_skip_only_space_zero_left(line);
+	if (line[i] == '\0')
 		aio->map.cut_after++;
 	else
 		aio->map.cut_after = 0;
 	left = ft_skip_only_space_zero_left(line);
 	right = ft_skip_only_space_zero_right(line);
-	printf("left -- %d,    right -- %d\n",left, right);
 	if (left < aio->map.cut_left)
 		aio->map.cut_left = left;
 	if (right < aio->map.cut_right)
 		aio->map.cut_right = right;
-printf("aio->map.cut_left -- %d,   aio->map.cut_right = right -- %d\n", aio->map.cut_left, aio->map.cut_right);
 	return(0);
 }
 
@@ -250,6 +248,7 @@ int		ft_write_and_cut(t_aio *aio, int *cut_left, int *cut_right)
 {
 	int i;
 	int j;
+	int k;
 	int len;
 	t_list *tmp;
 
@@ -258,7 +257,8 @@ int		ft_write_and_cut(t_aio *aio, int *cut_left, int *cut_right)
 	aio->map.width = aio->map.width - aio->map.cut_right - aio->map.cut_left;
 	while (i < aio->map.height)
 	{
-		j = 0;
+		k = 0;
+		j = aio->map.cut_left;
 		aio->map.map[i] = (char *)calloc_gc(sizeof(char), aio->map.width + 1);
 		while (((char *)tmp->content)[j] && j < aio->map.width + aio->map.cut_left)
 		{
@@ -267,9 +267,10 @@ int		ft_write_and_cut(t_aio *aio, int *cut_left, int *cut_right)
 				((char *)tmp->content)[j] != 'E' && ((char *)tmp->content)[j] != ' ')
 				return (-12);
 			else if (((char *)tmp->content)[j] == ' ')
-				aio->map.map[i][j + aio->map.cut_left] = '0';
+				aio->map.map[i][k] = '0';
 			else
-				aio->map.map[i][j + aio->map.cut_left] = (((char *)tmp->content)[j]);
+				aio->map.map[i][k] = (((char *)tmp->content)[j]);
+			k++;
 			j++;
 		}
 		tmp = tmp->next;
