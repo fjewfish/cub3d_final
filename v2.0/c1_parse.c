@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   c1_parse.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fjewfish <fjewfish@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fjewfish <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/13 12:58:17 by fjewfish          #+#    #+#             */
-/*   Updated: 2020/10/16 07:52:54 by fjewfish         ###   ########.fr       */
+/*   Updated: 2020/10/18 17:16:43 by fjewfish         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,12 @@ int		ft_map_parse(t_aio *aio);
 int		ft_write_and_cut(t_aio *aio, int *cut_left, int *cut_right);
 int		ft_skip_only_space_zero_left(char *line);
 int		ft_skip_only_space_zero_right(char *line);
-
+int		ft_skip_only_space_zero_up(char *line);
+void	ft_position(t_aio *aio);
+int		ft_parse_errors(t_aio *aio);
+int		ft_walls(t_aio *aio);
+int		ft_step_y_x(t_aio *aio, t_robot_checker *robot, int first, int second);
+int		ft_step_x_y(t_aio *aio, t_robot_checker *robot, int first, int second);
 
 int		ft_skip_spases(char *line, int *i)
 {
@@ -53,7 +58,6 @@ int		ft_parse(t_aio *aio, char *cub)
 	int		fd;
 	int		err;
 	int		i;
-
 	err = 1;
 	i = 0;
 	fd = open(cub, O_RDONLY);
@@ -66,10 +70,16 @@ int		ft_parse(t_aio *aio, char *cub)
 			err = ft_rnswesfc(aio, line);//Error : Couldn't parse file (GNL)
 		if (err == 1 && aio->parse_error.map_trigger == 1)
 		{
-			// ft_skip_spases(line, &i);'?????????????????????
-			if (aio->parse_error.map_empty_line == 0 && line[i] != '\0')
+			if (ft_skip_only_space_zero_up(line) && aio->parse_error.map_empty_line == 0)
+				aio->parse_error.map_empty_line = 1;
+			if (aio->parse_error.map_empty_line == 1 && ft_skip_only_space_zero_up(line))
 				ft_makemap_list(aio, line);
+			else if (aio->parse_error.map_empty_line == 1)
+				aio->parse_error.map_trigger = -1;
 		}
+		if (aio->parse_error.map_trigger == -1 && ft_skip_only_space_zero_up(line))
+			return(ft_error_number(-12));
+			//err = -12;
 			// free(line);
 	}
 	close(fd);
@@ -77,11 +87,11 @@ int		ft_parse(t_aio *aio, char *cub)
 	err = ft_map_parse(aio);
 	// if (err < 0)
 	// 	return (ft_error_number(err));//?????
-	ft_pos(aio);
+	ft_position(aio);
 	//aio->spr = NULL;
 	//ft_slist(s);
-	ft_print_parse(aio);
-	return (ft_parcheck(aio));
+//ft_print_parse(aio);
+	return (ft_parse_errors(aio));
 }
 
 int		ft_rnswesfc(t_aio *aio, char *line)
@@ -107,9 +117,9 @@ int		ft_rnswesfc(t_aio *aio, char *line)
 		aio->parse_error.settings = ft_rgb(&aio->tex.fl, line, &i);
 	else if (line[i] == 'C' && line[i + 1] == ' ')
 		aio->parse_error.settings = ft_rgb(&aio->tex.ce, line, &i);
-	else
+	else if(line[i] != '\0')
 		aio->parse_error.map_trigger = 1;
-	ft_skip_spases(line, &i);
+	//ft_skip_spases(line, &i);
 	if (aio->parse_error.settings == 0 && line[i] != '\0' && aio->parse_error.map_trigger != 1)
 	{
 		return (-10);
@@ -200,36 +210,32 @@ int		ft_makemap_list(t_aio *aio, char *line)
 {
 	int i;
 	int left;
-	int right;
+	int width;
 	int len;
 	i = 0;
 
 	len = ft_strlen(line);
+	left = ft_skip_only_space_zero_left(line);
+	width = len - ft_skip_only_space_zero_right(line) - left;
+//ft_printf("%s\n%d = len(%d) - right(%d) - left(%d)\n", line, width, len, ft_skip_only_space_zero_right(line), left);
 	if (!aio->map.list)
 	{
-		aio->map.cut_left = ft_strlen((const char *)line);
-		aio->map.cut_right = ft_strlen((const char *)line);
+		aio->map.cut_left = left;
+		aio->map.width = width;
 		aio->map.list = ft_lstnew((void *)line);
-		if (len > aio->map.width)
-			aio->map.width = len;
+		//if (len > aio->map.width)
+		//	aio->map.width = len;
 	}
 	else
 	{
 		ft_lstadd_back(&aio->map.list, ft_lstnew((void *)line));
-		if (len > aio->map.width)
-			aio->map.width = len;
+		//if (len > aio->map.width)
+		//	aio->map.width = len;
 	}
-		ft_skip_only_space_zero_left(line);
-	if (line[i] == '\0')
-		aio->map.cut_after++;
-	else
-		aio->map.cut_after = 0;
-	left = ft_skip_only_space_zero_left(line);
-	right = ft_skip_only_space_zero_right(line);
 	if (left < aio->map.cut_left)
 		aio->map.cut_left = left;
-	if (right < aio->map.cut_right)
-		aio->map.cut_right = right;
+	if (width > aio->map.width)
+		aio->map.width = width;
 	return(0);
 }
 
@@ -237,7 +243,7 @@ int		ft_map_parse(t_aio *aio)
 {
 	int cut_left;
 	int cut_right;
-	aio->map.height = ft_lstsize(aio->map.list) - aio->map.cut_after - 1;
+	aio->map.height = ft_lstsize(aio->map.list) - 1;
 	if (!(aio->map.map = (char **)malloc_gc(aio->map.height * sizeof(char *) + 1)))
 		return(-11);
 	aio->map.map[aio->map.height] = NULL;
@@ -254,12 +260,12 @@ int		ft_write_and_cut(t_aio *aio, int *cut_left, int *cut_right)
 
 	tmp = aio->map.list;
 	i = 0;
-	aio->map.width = aio->map.width - aio->map.cut_right - aio->map.cut_left;
 	while (i < aio->map.height)
 	{
 		k = 0;
 		j = aio->map.cut_left;
-		aio->map.map[i] = (char *)calloc_gc(sizeof(char), aio->map.width + 1);
+		aio->map.map[i] = (char *)malloc_gc(sizeof(char) * aio->map.width);
+		aio->map.map[i][aio->map.width] = 0;
 		while (((char *)tmp->content)[j] && j < aio->map.width + aio->map.cut_left)
 		{
 			if (((char *)tmp->content)[j] != '0' && ((char *)tmp->content)[j] != '1' && ((char *)tmp->content)[j] != '2' &&
@@ -270,14 +276,34 @@ int		ft_write_and_cut(t_aio *aio, int *cut_left, int *cut_right)
 				aio->map.map[i][k] = '0';
 			else
 				aio->map.map[i][k] = (((char *)tmp->content)[j]);
+			if (((char *)tmp->content)[j] == 'E')
+				aio->map.sprite_count++;
 			k++;
 			j++;
+		}
+		while (k < aio->map.width)
+		{
+			aio->map.map[i][k] = '0';
+			k++;
 		}
 		tmp = tmp->next;
 		i++;
 	}
 	return (1);
 }
+
+int		ft_skip_only_space_zero_up(char *line)
+{
+	int i;
+
+	i = 0;
+	while (line[i] == ' ' || line[i] == '0')
+		i++;
+	if (line[i] == '\0')
+		return (0);
+	return(1);
+}
+
 
 int		ft_skip_only_space_zero_left(char *line)
 {
@@ -300,81 +326,200 @@ int		ft_skip_only_space_zero_right(char *line)
 		i--;
 	return (len - i - 1);
 }
-/* ************************************************************************** */
-// int		ft_slablen(t_aio *s, char *line)
-// {
-// 	int	i;
-// 	int	count;
 
-// 	i = 0;
-// 	count = 0;
-// 	while (line[i] != '\0')
-// 	{
-// 		if (line[i] == '0' || line[i] == '1' || line[i] == '2')
-// 			count++;
-// 		else if (line[i] == 'N' || line[i] == 'S' || line[i] == 'W')
-// 			count++;
-// 		else if (line[i] == 'E')
-// 			count++;
-// 		i++;
-// 	}
-// 	if (s->map.width != 0 && s->map.width != count)
-// 		return (-1);
-// 	return (count);
-// }
+void	ft_position(t_aio *aio)
+{
+	char	c;
+	int		i;
+	int		j;
 
-// char	*ft_slab(t_aio *s, char *line, int *i)
-// {
-// 	char	*slab;
-// 	int		j;
+	i = -1;
+	j = -1;
+	int d = 0;
+	while (++i < aio->map.height)
+	{
+		while (++j < aio->map.width)
+		{
+			c = aio->map.map[i][j];
+			if (c == 'N' || c == 'E' || c == 'S' || c == 'W')
+			{
+				aio->plr.pos_y = (double)i + 0.5;
+				aio->plr.pos_x = (double)j + 0.5;
+				aio->plr.dir_x = (c == 'E' || c == 'W') ? 1 : 0;
+				aio->plr.dir_x *= (c == 'W') ? -1 : 1;
+				aio->plr.dir_y = (c == 'S' || c == 'N') ? 1 : 0;
+				aio->plr.dir_y *= (c == 'N') ? -1 : 1;
+				aio->parse_error.player++;
+			}
+		}
+		j = -1;
+	}
+}
 
-// 	if (!(slab = malloc(sizeof(char) * (ft_slablen(s, line) + 1))))
-// 		return (NULL);
-// 	j = 0;
-// 	while (line[*i] != '\0')
-// 	{
-// 		if ((line[*i] == '0' || line[*i] == '1' || line[*i] == 'N')
-// 			|| (line[*i] == 'E' || line[*i] == 'S' || line[*i] == 'W'))
-// 			slab[j++] = line[*i];
-// 		else if (line[*i] == '2')
-// 		{
-// 			slab[j++] = line[*i];
-// 			s->map.sprite_count++;
-// 		}
-// 		else if (line[*i] != ' ')
-// 		{
-// 			free(slab);
-// 			return (NULL);
-// 		}
-// 		(*i)++;
-// 	}
-// 	slab[j] = '\0';
-// 	return (slab);
-// }
 
-// int		ft_map(t_aio *aio, char *line, int *i)
-// {
-// 	char	**tmp;
-// 	int		j;
 
-// 	// aio->map.err_map = 1;
-// 	if (!(tmp = malloc(sizeof(char *) * (aio->map.height + 2))))
-// 		return (-11);
-// 	j = -1;
-// 	while (++j < aio->map.height)
-// 		tmp[j] = aio->map.map[j];
-// 	if ((tmp[aio->map.height] = ft_slab(aio, line, i)) == NULL)
-// 	{
-// 		free(tmp);
-// 		return (-12);
-// 	}
-// 	tmp[aio->map.height + 1] = NULL;
-// 	if (aio->map.height > 0)
-// 		free(aio->map.map);
-// 	aio->map.map = tmp;
-// 	aio->map.height++;
-// 	if ((aio->map.width = ft_slablen(aio, line)) == -1)
-// 		return (-13);
-// 	return (0);
-// }
+int		ft_parse_errors(t_aio *aio)
+{
+	int i;
+	int j;
 
+	i = 0;
+	 if (aio->res.map_x <= 0 || aio->res.map_y <= 0)
+	 	return (ft_error_number(-14));
+	 else if ((aio->tex.no == NULL || aio->tex.so == NULL || aio->tex.we == NULL)
+	 		|| (aio->tex.ea == NULL || aio->tex.sp == NULL))
+	 	return (ft_error_number(-15));
+	 else if (aio->tex.ce == 0xFF000000 || aio->tex.fl == 0xFF000000)
+	 	return (ft_error_number(-16));
+	 else if (aio->parse_error.player == 0)
+	 	return (ft_error_number(-17));
+	 else if (aio->parse_error.player > 1)
+	 	return (ft_error_number(-18));
+	 else if (ft_walls(aio) == -1)
+	{
+		ft_print_parse(aio);
+	 	return (ft_error_number(-19));
+	}
+	while (aio->map.map[i])
+	{
+		j = 0;
+		while (aio->map.map[i][j])
+		{
+			if (aio->map.map[i][j] == '8' || aio->map.map[i][j] == '9')
+				aio->map.map[i][j] = '1';
+			j++;
+		}
+		i++;
+	}
+	return (1);
+}
+
+int		ft_walls(t_aio *aio)
+{
+	int i;
+	t_robot_checker robot;
+
+	i = 0;
+	robot.x = -1;
+	robot.y = 0;
+	robot.start_y = 0;
+//ft_printf("HEERE!\n");
+	while (i < aio->map.width && robot.x == -1)
+	{
+		//ft_printf("HEERE! %d\n", i);
+		//ft_printf("HEERE! %c\n", aio->map.map[0][0]);
+		if (aio->map.map[0][i] == '1')
+		{
+			//aio->map.map[0][i] = '8';
+			robot.x = i;
+			robot.start_x = i;
+		}
+		i++;
+	}
+//ft_printf("HEERE!\n");
+	i = 0;
+	while (i >= 0)
+	{
+		ft_printf("robot(%d,%d)\n", robot.x, robot.y);
+		//ft_print_parse(aio);
+		if (ft_step_y_x(aio, &robot, -1, 1) == 1)
+			i++;
+		else if (ft_step_x_y(aio, &robot, 1, 1) == 1)
+			i++;
+		else if (ft_step_y_x(aio, &robot, 1, -1) == 1)
+			i++;
+		else if (ft_step_x_y(aio, &robot, -1, -1) == 1)
+			i++;
+		else
+			return (-1);
+	}
+	return (0);
+}
+
+int		ft_step_y_x(t_aio *aio, t_robot_checker *robot, int first, int second)
+{
+	if (robot->y + first >= 0 && robot->y + first < aio->map.height)
+	{
+		if(aio->map.map[robot->y + first][robot->x] == '1')
+		{
+			aio->map.map[robot->y][robot->x] = '8';
+			robot->y += first;
+			return(1);
+		}
+		else if(aio->map.map[robot->y + first][robot->x] == '8')
+		{
+			aio->map.map[robot->y][robot->x] = '9';
+			robot->y += first;
+			aio->map.map[robot->y][robot->x] = '9';
+			return(1);
+		}
+	}
+	if (robot->x + second >= 0 && robot->x + second < aio->map.width)
+	{
+		if(aio->map.map[robot->y][robot->x + second] == '1')
+		{
+			aio->map.map[robot->y][robot->x] = '8';
+			robot->x += second;
+			return(1);
+		}
+		else if(aio->map.map[robot->y][robot->x + second] == '8')
+		{
+			robot->x += second;
+			aio->map.map[robot->y][robot->x] = '9';
+			return(1);
+		}
+	}
+	return (0);
+}
+
+int		ft_step_x_y(t_aio *aio, t_robot_checker *robot, int first, int second)
+{
+	if (robot->x + first >= 0 && robot->x + first < aio->map.width)
+	{
+		if(aio->map.map[robot->y][robot->x + first] == '1')
+		{
+			robot->x += first;
+			aio->map.map[robot->y][robot->x] = '8';
+			return(1);
+		}
+		else if(aio->map.map[robot->y][robot->x + first] == '8')
+		{
+			robot->x += first;
+			aio->map.map[robot->y][robot->x] = '9';
+			return(1);
+		}
+	}
+	if (robot->y + second >= 0 && robot->y + second < aio->map.height)
+	{
+		if(aio->map.map[robot->y + second][robot->x] == '1')
+		{
+			robot->y += second;
+			aio->map.map[robot->y][robot->x] = '8';
+			return(1);
+		}
+		else if(aio->map.map[robot->y + second][robot->x] == '8')
+		{
+			robot->y += second;
+			aio->map.map[robot->y][robot->x] = '9';
+			return(1);
+		}
+	}
+	return (0);
+}
+	// while (i < aio->map.height)
+	// {
+	// 	j = 0;
+	// 	while (j < aio->map.width)
+	// 	{
+	// 		if (aio->map.map[i][j] != '1' && i == 0)
+	// 			return (-1);
+	// 		else if (aio->map.map[i][j] != '1' && i == aio->map.height - 1)
+	// 			return (-1);
+	// 		else if (aio->map.map[i][j] != '1' && j == 0)
+	// 			return (-1);
+	// 		else if (aio->map.map[i][j] != '1' && j == aio->map.width - 1)
+	// 			return (-1);
+	// 		j++;
+	// 	}
+	// 	i++;
+	// }

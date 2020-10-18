@@ -43,6 +43,14 @@
 # define M_REMOVE 0
 typedef char		t_bool;
 
+typedef struct	s_robot_checker
+{
+	int			x;
+	int			y;
+	int			start_x;
+	int			start_y;
+}				t_robot_checker;
+
 typedef struct	s_parse_error
 {
 	int			map_trigger;
@@ -81,7 +89,6 @@ typedef struct	s_img
 
 typedef struct	s_map
 {
-	int			cut_after;
 	int			cut_left;
 	int			cut_right;
 	char		**map;

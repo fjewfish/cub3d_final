@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   b1_initialization.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fjewfish <fjewfish@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fjewfish <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 17:34:02 by fjewfish          #+#    #+#             */
-/*   Updated: 2020/10/16 04:10:58 by fjewfish         ###   ########.fr       */
+/*   Updated: 2020/10/18 06:28:17 by fjewfish         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void		ft_initialization(t_aio *aio)
 	aio->img.endian = 0;
 	aio->img.line_length = 0;
 	aio->map.map = NULL;
-	aio->map.cut_after = 0;
 	aio->map.cut_left = 0;
 	aio->map.cut_right = 0;
 	aio->map.height = 0;

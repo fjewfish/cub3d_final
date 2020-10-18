@@ -3,44 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   c2_parse.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fjewfish <fjewfish@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fjewfish <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/13 12:58:26 by fjewfish          #+#    #+#             */
-/*   Updated: 2020/10/16 05:50:23 by fjewfish         ###   ########.fr       */
+/*   Updated: 2020/10/18 07:46:57 by fjewfish         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main_header_v2.h"
 
-void	ft_pos(t_aio *aio)
-{
-	char	c;
-	int		i;
-	int		j;
-
-	i = -1;
-	j = -1;
-	int d = 0;
-	while (++i < aio->map.height)
-	{
-		while (++j < aio->map.width)
-		{
-			// ft_printf("%s\n", aio->map.map[i]);
-			c = aio->map.map[i][j];
-			if (c == 'N' || c == 'E' || c == 'S' || c == 'W')
-			{
-				aio->plr.pos_y = (double)i + 0.5;
-				aio->plr.pos_x = (double)j + 0.5;
-				aio->plr.dir_x = (c == 'E' || c == 'W') ? 1 : 0;
-				aio->plr.dir_x *= (c == 'W') ? -1 : 1;
-				aio->plr.dir_y = (c == 'S' || c == 'N') ? 1 : 0;
-				aio->plr.dir_y *= (c == 'N') ? -1 : 1;
-				aio->parse_error.player++;
-			}
-		}
-		j = -1;
-	}
-}
 
 // //int		ft_slist(t_all *s)
 // //{
@@ -197,53 +168,6 @@ void	ft_pos(t_aio *aio)
 // //		return (-13);
 // //	return (0);
 // //}
-
-
-int		ft_parcheck(t_aio *aio)
-{
-	// if (aio->res.map_x <= 0 || aio->res.map_y <= 0)
-	// 	return (ft_error_number(-14));
-	// else if ((aio->tex.no == NULL || aio->tex.so == NULL || aio->tex.we == NULL)
-	// 		|| (aio->tex.ea == NULL || aio->tex.sp == NULL))
-	// 	return (ft_error_number(-15));
-	// else if (aio->tex.ce == 0xFF000000 || aio->tex.fl == 0xFF000000)
-	// 	return (ft_error_number(-16));
-	// else if (aio->parse_error.player == 0)
-	// 	return (ft_error_number(-17));
-	// else if (aio->parse_error.player > 1)
-	// 	return (ft_error_number(-18));
-	// else if (ft_mapcheck(aio) == -1)
-	// 	return (ft_error_number(-19));
-	return (1);
-}
-
-int		ft_mapcheck(t_aio *aio)
-{
-	// int		i;
-	// int		j;
-
-	// i = 0;
-	// j = 0;
-	// while (i < aio->map.height)
-	// {
-	// 	j = 0;
-	// 	while (j < aio->map.width)
-	// 	{
-	// 		if (aio->map.map[i][j] != '1' && i == 0)
-	// 			return (-1);
-	// 		else if (aio->map.map[i][j] != '1' && i == aio->map.height - 1)
-	// 			return (-1);
-	// 		else if (aio->map.map[i][j] != '1' && j == 0)
-	// 			return (-1);
-	// 		else if (aio->map.map[i][j] != '1' && j == aio->map.width - 1)
-	// 			return (-1);
-	// 		j++;
-	// 	}
-	// 	i++;
-	// }
-	return (1);
-}
-
 
 
 
