@@ -1,0 +1,22 @@
+R  1080 720
+NO ./map/textures/brick.xpm
+SO ./map/textures/blue.xpm
+
+WE ./map/textures/wood.xpm
+
+EA ./map/textures/grey.xpm
+
+S ./map/textures/chest.xpm
+F 224,172,105
+C 205,249,255
+
+ 1111111111111
+120000000000001
+10S01 11111111
+ 10011
+11 1
+11 11
+10001
+10001
+10001
+11111

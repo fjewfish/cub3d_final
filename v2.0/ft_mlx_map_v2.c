@@ -58,7 +58,8 @@ void	ft_map_mode(t_aio *aio)
 		scale = max_y;
 	int i = 0;
 	int j = 0;
-
+//int testx;
+//int testy;
 my_mlx_pixel_put_plr(aio, aio->plr.pos_x, aio->plr.pos_y, GREEN, scale);
 
 	while (aio->map.map[i])
@@ -68,16 +69,18 @@ my_mlx_pixel_put_plr(aio, aio->plr.pos_x, aio->plr.pos_y, GREEN, scale);
 		{
 			if (aio->map.map[i][j] == '1')
 			{
-				//if (i == 0 || j == 0 || i == aio->map.height - 1 || j == aio->map.width - 1)
-				//	my_mlx_pixel_put(aio, j, i, PURPLE, scale);
-				//else
+				if (i == 0 || j == 0 || i == aio->map.height - 1 || j == aio->map.width - 1)
+					my_mlx_pixel_put(aio, j, i, PURPLE, scale);
+				else
 					my_mlx_pixel_put(aio, j, i, RED, scale);
 			}
-			else
-			{
-				mlx_string_put(aio->mlx.ptr, aio->win.ptr , j*scale, i*scale,
-							WHITE, "?");
-			}
+			//else if (aio->map.map[i][j] == '2')
+			//{
+			//	testx = j;
+			//	testy = i;
+			//	mlx_string_put(aio->mlx.ptr, aio->win.ptr , j*scale, i*scale,
+			//				WHITE, "?");
+			//}
 			j++;
 		}
 		i++;
@@ -86,8 +89,11 @@ my_mlx_pixel_put_ray(aio, aio->plr.pos_x, aio->plr.pos_y, PURPLE, scale);
 mlx_put_image_to_window(aio->mlx.ptr, aio->win.ptr, aio->img.ptr, 0, 0);
 
 /////////////////////
+//ft_printf("\n\n%d -- %d\n\n", testx, testy);
+//mlx_string_put(aio->mlx.ptr, aio->win.ptr , testx*scale + scale / 2, testy*scale + scale / 2,
+//							WHITE, "?");
 mlx_string_put(aio->mlx.ptr, aio->win.ptr , aio->res.map_x - 150, aio->res.map_y - 40,
-							PURPLE, "FJEWFISH 42");
+							WHITE, "FJEWFISH 42");
 ///////////////////
 
 	aio->img.ptr = NULL;

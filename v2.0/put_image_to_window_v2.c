@@ -66,7 +66,7 @@ void	ft_screen(t_aio *s)
 	s->mapmod.last_hit_x = s->hit.x;
 	s->mapmod.last_hit_y = s->hit.y;
 	mlx_do_sync(s->mlx.ptr);
-	//ft_sprite(s);
+	ft_sprite(s);
 	//ft_hud(s);
 }
 
