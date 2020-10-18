@@ -6,7 +6,7 @@
 /*   By: fjewfish <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/13 12:58:17 by fjewfish          #+#    #+#             */
-/*   Updated: 2020/10/18 17:16:43 by fjewfish         ###   ########.fr       */
+/*   Updated: 2020/10/19 00:12:48 by fjewfish         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,9 @@ int		ft_parse_errors(t_aio *aio);
 int		ft_walls(t_aio *aio);
 int		ft_step_y_x(t_aio *aio, t_robot_checker *robot, int first, int second);
 int		ft_step_x_y(t_aio *aio, t_robot_checker *robot, int first, int second);
+
+int		ft_step_y_x_8(t_aio *aio, t_robot_checker *robot, int first, int second);
+int		ft_step_x_y_8(t_aio *aio, t_robot_checker *robot, int first, int second);
 
 int		ft_skip_spases(char *line, int *i)
 {
@@ -377,149 +380,132 @@ int		ft_parse_errors(t_aio *aio)
 	 	return (ft_error_number(-18));
 	 else if (ft_walls(aio) == -1)
 	{
-		ft_print_parse(aio);
 	 	return (ft_error_number(-19));
 	}
-	while (aio->map.map[i])
+	aio->map.height += 2;
+	aio->map.width += 2;
+	ft_print_parse(aio);
+	return (1);
+}
+
+char	**ft_init_protected_map(t_aio *aio, char change);
+void	ft_print_map_protected(char **map_protected);
+void	ft_print_map_protected(char **map_protected)
+{
+	ft_printf("MAP.PROTECTED\n");
+	int i;
+
+	i = 0;
+	while(map_protected[i])
+	{
+		ft_printf("%s\n", map_protected[i]);
+		i++;
+	}
+}
+int		ft_recursive_paint_algorithm(int y, int x, char **map_protected, t_aio *aio);
+int		ft_check_map_potected(char **map_protected, t_aio *aio);
+
+int		ft_walls(t_aio *aio)
+{
+	char **map_protected;
+	map_protected = ft_init_protected_map(aio, '9');
+ft_print_map_protected(map_protected);
+	ft_recursive_paint_algorithm(aio->plr.pos_y + 1, aio->plr.pos_x + 1, map_protected, aio);
+ft_print_map_protected(map_protected);
+	aio->map.map = ft_init_protected_map(aio, '1');
+	aio->plr.pos_x++;
+	aio->plr.pos_y++;
+	return(ft_check_map_potected(map_protected, aio));
+}
+
+char	**ft_init_protected_map(t_aio *aio, char change)
+{
+	char **map_protected;
+	int i;
+	int j;
+
+	i = 0;
+	map_protected = (char **)malloc_gc((aio->map.height + 2) * sizeof(char *) + 1);
+	map_protected[aio->map.height + 2] = NULL;
+
+	map_protected[0] = (char *)malloc_gc((aio->map.width + 2) * sizeof(char));
+	while (i < (aio->map.width + 2))
+	{
+		map_protected[0][i] = change;
+		i++;
+	}
+	map_protected[0][i] = '\0';
+	i = 0;
+	map_protected[aio->map.height + 1] = (char *)malloc_gc((aio->map.width + 2) * sizeof(char));
+	while (i < (aio->map.width + 2))
+	{
+		map_protected[aio->map.height + 1][i] = change;
+		i++;
+	}
+	map_protected[aio->map.height + 1][i] = '\0';
+	i = 0;
+	while (i < aio->map.height)
 	{
 		j = 0;
-		while (aio->map.map[i][j])
+		map_protected[i + 1] = (char *)malloc_gc((aio->map.width + 2) * sizeof(char));
+		map_protected[i + 1][0] = change;
+		map_protected[i + 1][aio->map.width + 1] = change;
+		map_protected[i + 1][aio->map.width + 2] = 0;
+		while (j < aio->map.width)
 		{
-			if (aio->map.map[i][j] == '8' || aio->map.map[i][j] == '9')
-				aio->map.map[i][j] = '1';
+			map_protected[i + 1][j + 1] = aio->map.map[i][j];
+			if (change == '9' && (map_protected[i + 1][j + 1] == '2' || map_protected[i + 1][j + 1] == 'N' ||
+				map_protected[i + 1][j + 1] == 'S' || map_protected[i + 1][j + 1] == 'E' ||
+				map_protected[i + 1][j + 1] == 'W'))
+				map_protected[i + 1][j + 1] = '0';
+			j++;
+		}
+		i++;
+	}
+	return (map_protected);
+}
+
+int		ft_recursive_paint_algorithm(int y, int x, char **map_protected, t_aio *aio)
+{
+	if (map_protected[y][x] != '0')
+		return (1);
+	map_protected[y][x] = '*';
+	if (y + 1 <= aio->map.height)
+		ft_recursive_paint_algorithm(y + 1, x, map_protected, aio);
+	if (y - 1 > 0)
+		ft_recursive_paint_algorithm(y - 1, x, map_protected, aio);
+	if (x + 1 <= aio->map.width)
+		ft_recursive_paint_algorithm(y, x + 1, map_protected, aio);
+	if (x - 1 > 0)
+		ft_recursive_paint_algorithm(y, x - 1, map_protected, aio);
+	return (1);
+}
+
+int		ft_check_map_potected(char **map_protected, t_aio *aio)
+{
+	int i;
+	int j;
+
+	i = 0;
+	while (map_protected[i])
+	{
+		j = 0;
+		while (map_protected[i][j])
+		{
+			if (map_protected[i][j] == '9')
+			{
+				if (i + 1 <= aio->map.height && map_protected[i + 1][j] == '*')
+					return (-1);
+				if (i - 1 > 0 && map_protected[i - 1][j] == '*')
+					return (-1);
+				if (j + 1 <= aio->map.width && map_protected[i][j + 1] == '*')
+					return (-1);
+				if (j - 1 > 0 && map_protected[i][j - 1] == '*')
+					return (-1);
+			}
 			j++;
 		}
 		i++;
 	}
 	return (1);
 }
-
-int		ft_walls(t_aio *aio)
-{
-	int i;
-	t_robot_checker robot;
-
-	i = 0;
-	robot.x = -1;
-	robot.y = 0;
-	robot.start_y = 0;
-//ft_printf("HEERE!\n");
-	while (i < aio->map.width && robot.x == -1)
-	{
-		//ft_printf("HEERE! %d\n", i);
-		//ft_printf("HEERE! %c\n", aio->map.map[0][0]);
-		if (aio->map.map[0][i] == '1')
-		{
-			//aio->map.map[0][i] = '8';
-			robot.x = i;
-			robot.start_x = i;
-		}
-		i++;
-	}
-//ft_printf("HEERE!\n");
-	i = 0;
-	while (i >= 0)
-	{
-		ft_printf("robot(%d,%d)\n", robot.x, robot.y);
-		//ft_print_parse(aio);
-		if (ft_step_y_x(aio, &robot, -1, 1) == 1)
-			i++;
-		else if (ft_step_x_y(aio, &robot, 1, 1) == 1)
-			i++;
-		else if (ft_step_y_x(aio, &robot, 1, -1) == 1)
-			i++;
-		else if (ft_step_x_y(aio, &robot, -1, -1) == 1)
-			i++;
-		else
-			return (-1);
-	}
-	return (0);
-}
-
-int		ft_step_y_x(t_aio *aio, t_robot_checker *robot, int first, int second)
-{
-	if (robot->y + first >= 0 && robot->y + first < aio->map.height)
-	{
-		if(aio->map.map[robot->y + first][robot->x] == '1')
-		{
-			aio->map.map[robot->y][robot->x] = '8';
-			robot->y += first;
-			return(1);
-		}
-		else if(aio->map.map[robot->y + first][robot->x] == '8')
-		{
-			aio->map.map[robot->y][robot->x] = '9';
-			robot->y += first;
-			aio->map.map[robot->y][robot->x] = '9';
-			return(1);
-		}
-	}
-	if (robot->x + second >= 0 && robot->x + second < aio->map.width)
-	{
-		if(aio->map.map[robot->y][robot->x + second] == '1')
-		{
-			aio->map.map[robot->y][robot->x] = '8';
-			robot->x += second;
-			return(1);
-		}
-		else if(aio->map.map[robot->y][robot->x + second] == '8')
-		{
-			robot->x += second;
-			aio->map.map[robot->y][robot->x] = '9';
-			return(1);
-		}
-	}
-	return (0);
-}
-
-int		ft_step_x_y(t_aio *aio, t_robot_checker *robot, int first, int second)
-{
-	if (robot->x + first >= 0 && robot->x + first < aio->map.width)
-	{
-		if(aio->map.map[robot->y][robot->x + first] == '1')
-		{
-			robot->x += first;
-			aio->map.map[robot->y][robot->x] = '8';
-			return(1);
-		}
-		else if(aio->map.map[robot->y][robot->x + first] == '8')
-		{
-			robot->x += first;
-			aio->map.map[robot->y][robot->x] = '9';
-			return(1);
-		}
-	}
-	if (robot->y + second >= 0 && robot->y + second < aio->map.height)
-	{
-		if(aio->map.map[robot->y + second][robot->x] == '1')
-		{
-			robot->y += second;
-			aio->map.map[robot->y][robot->x] = '8';
-			return(1);
-		}
-		else if(aio->map.map[robot->y + second][robot->x] == '8')
-		{
-			robot->y += second;
-			aio->map.map[robot->y][robot->x] = '9';
-			return(1);
-		}
-	}
-	return (0);
-}
-	// while (i < aio->map.height)
-	// {
-	// 	j = 0;
-	// 	while (j < aio->map.width)
-	// 	{
-	// 		if (aio->map.map[i][j] != '1' && i == 0)
-	// 			return (-1);
-	// 		else if (aio->map.map[i][j] != '1' && i == aio->map.height - 1)
-	// 			return (-1);
-	// 		else if (aio->map.map[i][j] != '1' && j == 0)
-	// 			return (-1);
-	// 		else if (aio->map.map[i][j] != '1' && j == aio->map.width - 1)
-	// 			return (-1);
-	// 		j++;
-	// 	}
-	// 	i++;
-	// }

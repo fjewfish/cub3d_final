@@ -28,7 +28,10 @@ my_mlx_pixel_put_plr(aio, aio->plr.pos_x, aio->plr.pos_y, GREEN, scale);
 		{
 			if (aio->map.map[i][j] == '1')
 			{
-				my_mlx_pixel_put(aio, j, i, RED, scale);
+				if (i == 0 || j == 0 || i == aio->map.height - 1 || j == aio->map.width - 1)
+					my_mlx_pixel_put(aio, j, i, PURPLE, scale);
+				else
+					my_mlx_pixel_put(aio, j, i, RED, scale);
 			}
 			j++;
 		}
@@ -65,7 +68,10 @@ my_mlx_pixel_put_plr(aio, aio->plr.pos_x, aio->plr.pos_y, GREEN, scale);
 		{
 			if (aio->map.map[i][j] == '1')
 			{
-				my_mlx_pixel_put(aio, j, i, RED, scale);
+				//if (i == 0 || j == 0 || i == aio->map.height - 1 || j == aio->map.width - 1)
+				//	my_mlx_pixel_put(aio, j, i, PURPLE, scale);
+				//else
+					my_mlx_pixel_put(aio, j, i, RED, scale);
 			}
 			else
 			{
