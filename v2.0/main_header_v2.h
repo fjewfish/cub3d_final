@@ -161,6 +161,20 @@ typedef struct	s_key
 	int				x;
 }				t_key;
 
+typedef struct	s_spr
+{
+	double			x;
+	double			y;
+	double			d;
+}				t_spr;
+
+typedef struct	s_stk
+{
+	double			x;
+	double			y;
+	double			d;
+}				t_stk;
+
 typedef struct	s_aio
 {
 	t_parse_error	parse_error;
@@ -175,6 +189,8 @@ typedef struct	s_aio
 	t_ray			ray;
 	t_hit			hit;
 	t_key			key;
+	t_spr			*spr;
+	t_stk			*stk;
 }				t_aio;
 
 //	A_MAIN
@@ -186,7 +202,9 @@ void		ft_initialization_3(t_aio *aio);
 
 
 
-
+//SPRITE
+int		ft_slist(t_aio *aio);
+void			ft_sprite(t_aio *aio);
 //	CHEKER
 int		ft_savecheck(char *arg, char *save);
 int		ft_namecheck(char *arg, char *ext);

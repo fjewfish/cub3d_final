@@ -96,6 +96,13 @@ void	ft_move(t_aio *aio, double coeff)
 	if (ft_is(WALL, c))
 		aio->plr.pos_y -= coeff * (aio->plr.dir_y * SPEED / 100);
 	c = aio->map.map[(int)floor(aio->plr.pos_y)][(int)floor(aio->plr.pos_x)];
+	if (ft_is(ITEM, c))
+	{
+		aio->map.map[(int)floor(aio->plr.pos_y)][(int)floor(aio->plr.pos_x)] = '0';
+		aio->map.sprite_count--;
+//ft_printf("SPRITE\n Count = %d,", aio->map.sprite_count);
+		ft_slist(aio);
+	}
 	//if (ft_is(PICK, c))
 	//{
 	//	if (c == '7')
@@ -123,6 +130,13 @@ void	ft_strafe(t_aio *aio, double coeff)
 	if (ft_is(WALL, c))
 		aio->plr.pos_y -= coeff * (aio->plr.dir_x * SPEED / 100);
 	c = aio->map.map[(int)floor(aio->plr.pos_y)][(int)floor(aio->plr.pos_x)];
+	if (ft_is(ITEM, c))
+	{
+		aio->map.map[(int)floor(aio->plr.pos_y)][(int)floor(aio->plr.pos_x)] = '0';
+		aio->map.sprite_count--;
+//ft_printf("SPRITE\n Count = %d,", aio->map.sprite_count);
+		ft_slist(aio);
+	}
 	//if (ft_is(PICK, c))
 	//{
 	//	if (c == '7')

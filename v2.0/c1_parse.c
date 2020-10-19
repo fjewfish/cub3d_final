@@ -6,7 +6,7 @@
 /*   By: fjewfish <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/13 12:58:17 by fjewfish          #+#    #+#             */
-/*   Updated: 2020/10/19 00:12:48 by fjewfish         ###   ########.fr       */
+/*   Updated: 2020/10/19 14:13:13 by fjewfish         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,8 @@ int		ft_parse(t_aio *aio, char *cub)
 	// if (err < 0)
 	// 	return (ft_error_number(err));//?????
 	ft_position(aio);
-	//aio->spr = NULL;
-	//ft_slist(s);
+	aio->spr = NULL;
+	//ft_slist(aio);
 //ft_print_parse(aio);
 	return (ft_parse_errors(aio));
 }
@@ -279,7 +279,7 @@ int		ft_write_and_cut(t_aio *aio, int *cut_left, int *cut_right)
 				aio->map.map[i][k] = '0';
 			else
 				aio->map.map[i][k] = (((char *)tmp->content)[j]);
-			if (((char *)tmp->content)[j] == 'E')
+			if (((char *)tmp->content)[j] == '2')
 				aio->map.sprite_count++;
 			k++;
 			j++;
@@ -384,7 +384,8 @@ int		ft_parse_errors(t_aio *aio)
 	}
 	aio->map.height += 2;
 	aio->map.width += 2;
-	ft_print_parse(aio);
+	ft_slist(aio);
+	//ft_print_parse(aio);
 	return (1);
 }
 
@@ -409,9 +410,9 @@ int		ft_walls(t_aio *aio)
 {
 	char **map_protected;
 	map_protected = ft_init_protected_map(aio, '9');
-ft_print_map_protected(map_protected);
+//ft_print_map_protected(map_protected);
 	ft_recursive_paint_algorithm(aio->plr.pos_y + 1, aio->plr.pos_x + 1, map_protected, aio);
-ft_print_map_protected(map_protected);
+//ft_print_map_protected(map_protected);
 	aio->map.map = ft_init_protected_map(aio, '1');
 	aio->plr.pos_x++;
 	aio->plr.pos_y++;

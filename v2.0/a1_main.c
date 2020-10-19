@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   A1_main.c                                          :+:      :+:    :+:   */
+/*   a1_main.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fjewfish <fjewfish@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fjewfish <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 14:25:31 by fjewfish          #+#    #+#             */
-/*   Updated: 2020/10/16 02:53:10 by fjewfish         ###   ########.fr       */
+/*   Updated: 2020/10/19 13:59:57 by fjewfish         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ int			ft_cub(char *cub, int screenshot)
 				aio->res.display_y);
 	if (ft_parse(aio, cub) == -1)
 		return (ft_close(aio, 0));
+ft_print_parse(aio);
 	if (screenshot == 1)
 		return (ft_bmp_save(aio));
 	aio->win.ptr = mlx_new_window(aio->mlx.ptr, aio->res.map_x,

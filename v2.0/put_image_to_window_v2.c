@@ -2,11 +2,11 @@
 
 int		ft_is(int n, char c)
 {
-	if (n == WALL && (c == '1' || c == '2' || c == '3' || c == '4'))
+	if (n == WALL && (c == '1'))
 		return (1);
-	else if (n == WALL && (c == '4' || c == '5' || c == '6'))
-		return (1);
-	else if ((n == ITEM) && (c == '7' || c == '8' || c == '-'))
+	//else if (n == WALL && (c == '4' || c == '5' || c == '6'))
+	//	return (1);
+	else if ((n == ITEM) && (c == '2'))
 		return (1);
 	else if (n == POS && (c == 'N' || c == 'S' || c == 'E' || c == 'W'))
 		return (1);
@@ -20,12 +20,18 @@ int		ft_is(int n, char c)
 
 int		ft_draw(t_aio *s)
 {
+	char *spr_print;
 	//if (ft_endflag(s))
 	//	ft_close(s, 1);
 	mlx_do_sync(s->mlx.ptr);
 	ft_screen(s);
 	ft_map_mini(s);
 	mlx_put_image_to_window(s->mlx.ptr, s->win.ptr, s->img.ptr, 0, 0);
+	mlx_string_put(s->mlx.ptr, s->win.ptr , s->res.map_x - 200, 20,
+							WHITE, "left to collect ");
+	spr_print = ft_itoa(s->map.sprite_count);
+	mlx_string_put(s->mlx.ptr, s->win.ptr , s->res.map_x - 30, 20,
+							WHITE, spr_print);
 	s->img.ptr = NULL;
 	s->img.adr = NULL;
 	free(s->img.ptr);
@@ -45,7 +51,7 @@ void	ft_screen(t_aio *s)
 	//s->ray.i = 0;
 	//while (s->ray.i < s->res.map_y / 2)
 	//	ft_floor(s);
-	// s->stk = malloc(sizeof(t_stk) * s->res.map_x);
+	s->stk = malloc(sizeof(t_stk) * s->res.map_x);
 	s->ray.i = 0;
 	while (s->ray.i < s->res.map_x)
 	{
@@ -258,9 +264,9 @@ void	ft_hor(t_aio *s)
 
 void			ft_stock(t_aio *aio)
 {
-// 	aio->stk[aio->ray.i].x = aio->ray.x;
-// 	aio->stk[aio->ray.i].y = aio->ray.y;
-// 	aio->stk[aio->ray.i].d = aio->hit.d;
+ 	aio->stk[aio->ray.i].x = aio->ray.x;
+ 	aio->stk[aio->ray.i].y = aio->ray.y;
+ 	aio->stk[aio->ray.i].d = aio->hit.d;
 }
 
 int				ft_size(t_aio *aio)

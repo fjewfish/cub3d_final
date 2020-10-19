@@ -6,7 +6,7 @@
 /*   By: fjewfish <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/09 19:31:08 by cclaude           #+#    #+#             */
-/*   Updated: 2020/09/29 18:24:57 by fjewfish         ###   ########.fr       */
+/*   Updated: 2020/10/19 12:46:08 by fjewfish         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,18 +35,18 @@ void	ft_move(t_all *s, double coeff)
 	if (ft_is(WALL, c) || ft_is(DECOR, c) || ft_is(DOOR, c))
 		s->pos.y -= coeff * (s->dir.y * SPEED / 100);
 	c = s->map.tab[(int)floor(s->pos.y)][(int)floor(s->pos.x)];
-	//if (ft_is(PICK, c))
-	//{
-	//	if (c == '7')
-	//		s->hud.h += 35;
-	//	else if (c == '8')
-	//		s->hud.s += 1000;
-	//	else if (c == '-')
-	//		s->hud.a += 3;
-	//	s->map.tab[(int)floor(s->pos.y)][(int)floor(s->pos.x)] = '0';
-	//	s->map.spr--;
-	//	ft_slist(s);
-	//}
+	if (ft_is(PICK, c))
+	{
+		if (c == '7')
+			s->hud.h += 35;
+		else if (c == '8')
+			s->hud.s += 1000;
+		else if (c == '-')
+			s->hud.a += 3;
+		s->map.tab[(int)floor(s->pos.y)][(int)floor(s->pos.x)] = '0';
+		s->map.spr--;
+		ft_slist(s);
+	}
 }
 
 void	ft_strafe(t_all *s, double coeff)
