@@ -6,7 +6,7 @@
 /*   By: fjewfish <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/19 00:59:02 by fjewfish          #+#    #+#             */
-/*   Updated: 2020/10/19 17:59:30 by fjewfish         ###   ########.fr       */
+/*   Updated: 2020/10/21 00:18:30 by fjewfish         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void			ft_sprite(t_aio *aio);
 void			ft_sorder(t_aio *aio);
 void			ft_slocate(t_aio *aio, double dirx, double diry, double dist);
 void			ft_sdraw(t_aio *aio, int loc, double dist);
-unsigned int	ft_spixel(t_aio *aio, int index, unsigned int col);
+unsigned int	ft_spixel(t_aio *aio, int index, unsigned int col, int x);
 
 int		ft_slist(t_aio *aio)
 {
@@ -120,38 +120,33 @@ void			ft_sdraw(t_aio *aio, int loc, double dist)
 	unsigned int	col;
 	double			size;
 	int				index;
-	int				i;
-	int				j;
+	int				y;
+	int				x;
 
-	i = 0;
-	j = 0;
+	y = 0;
+	x = 0;
 	size = aio->res.map_y / dist / 2;
 	loc = loc - size / 2;
-	while (i < size)
+	while (y < size)
 	{
-		while ((loc + i >= 0 && loc + i < aio->res.map_x) &&
-				(j < size && aio->stk[loc + i].d > dist))
+		while ((loc + y >= 0 && loc + y < aio->res.map_x) &&
+				(x < size && aio->stk[loc + y].d > dist))
 		{
-			col = 64 * floor(64 * (double)j / size) + (double)i / size * 64;
-			col = aio->tex.sprite[col];
-			index = loc + i + ((aio->res.map_y / 2 + j) * aio->res.map_x) / 4;
-			if (index < aio->res.map_x * aio->res.map_y)
-				aio->img.adr[index] = ft_spixel(aio, index, col);
-			//{
-			//	char    *dst;
-			//	dst = (char *)(aio->img.adr + (i * aio->img.line_length + j * (aio->img.bits_per_pixel / 8)) / 4);
-			//	*(unsigned int*)dst = mlx_get_color_value(aio->mlx.ptr, ft_spixel(aio, index, col));
-			//}
-			j++;
+			col = 64 * floor(64 * (double)x / size) + (double)y / size * 64;
+			col = aio->tex.sp[col];
+			index = loc + y + (aio->res.map_y / 2 + x) * aio->res.map_x + x*aio->img.coef_dylib;
+			if (index < (aio->res.map_x * aio->res.map_y + x*aio->img.coef_dylib))
+				aio->img.adr[index] = ft_spixel(aio, index, col, x);
+			x++;
 		}
-		i++;
-		j = 0;
+		y++;
+		x = 0;
 	}
 }
 
 
 
-unsigned int	ft_spixel(t_aio *aio, int index, unsigned int col)
+unsigned int	ft_spixel(t_aio *aio, int index, unsigned int col, int x)
 {
 	int	t;
 	int	r;

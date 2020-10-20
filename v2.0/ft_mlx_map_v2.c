@@ -197,7 +197,7 @@ void		my_mlx_pixel_put_ray(t_aio *aio, double x, double y, int color, int scale)
 			while (save_x != x1)
 			{
 				char    *dst;
-				dst = (char *)(aio->img.adr + (save_y * aio->img.line_length + save_x * (aio->img.bits_per_pixel / 8)) / 4);
+				dst = (char *)(aio->img.adr + (save_y * aio->img.line_length/4 + save_x));
 				*(unsigned int*)dst = color;
 				error += delta_err;
 				if (error >= (delta_x + 1))
@@ -213,7 +213,7 @@ void		my_mlx_pixel_put_ray(t_aio *aio, double x, double y, int color, int scale)
 			while (save_y != y1)
 			{
 				char    *dst;
-				dst = (char *)(aio->img.adr + (save_y * aio->img.line_length + save_x * (aio->img.bits_per_pixel / 8)) / 4);
+				dst = (char *)(aio->img.adr + (save_y * aio->img.line_length/4 + save_x));
 				*(unsigned int*)dst = color;
 				error2 += delta_err2;
 				if (error2 >= (delta_y + 1))
@@ -262,7 +262,7 @@ void		my_mlx_pixel_put_ray(t_aio *aio, double x, double y, int color, int scale)
 			while (save_x != x1)
 			{
 				char    *dst;
-				dst = (char *)(aio->img.adr + (save_y * aio->img.line_length + save_x * (aio->img.bits_per_pixel / 8)) / 4);
+				dst = (char *)(aio->img.adr + (save_y * aio->img.line_length/4 + save_x));
 				*(unsigned int*)dst = color;
 				error += delta_err;
 				if (error >= (delta_x + 1))
@@ -278,7 +278,7 @@ void		my_mlx_pixel_put_ray(t_aio *aio, double x, double y, int color, int scale)
 			while (save_y != y1)
 			{
 				char    *dst;
-				dst = (char *)(aio->img.adr + (save_y * aio->img.line_length + save_x * (aio->img.bits_per_pixel / 8)) / 4);
+				dst = (char *)(aio->img.adr + (save_y * aio->img.line_length/4 + save_x));
 				*(unsigned int*)dst = color;
 				error2 += delta_err2;
 				if (error2 >= (delta_y + 1))

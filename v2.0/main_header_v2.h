@@ -85,6 +85,7 @@ typedef struct	s_img
 	int				bits_per_pixel;
 	int				line_length;
 	int				endian;
+	int				coef_dylib;
 }				t_img;
 
 typedef struct	s_map
@@ -218,27 +219,27 @@ int		ft_spaceskip(char *line, int *i);
 //	BMP_SAVE
 int		ft_bmp_save(t_aio *aio);
 //PUT_IMAGE
-int		ft_draw(t_aio *s);
-void	ft_screen(t_aio *s);
-void	ft_ray(t_aio *s);
-void	ft_dir(t_aio *s);
-void	ft_ver(t_aio *s);
-void	ft_hor(t_aio *s);
+int		ft_draw(t_aio *aio);
+void	ft_screen(t_aio *aio);
+void	ft_ray(t_aio *aio);
+void	ft_dir(t_aio *aio);
+void	ft_ver(t_aio *aio);
+void	ft_hor(t_aio *aio);
 void			ft_stock(t_aio *aio);
 void			ft_column(t_aio *aio, int size);
 int				ft_size(t_aio *aio);
 unsigned int	ft_pixel(t_aio *aio, double i);
 int		ft_is(int n, char c);
 //
-int		ft_parcheck(t_aio *s);
+int		ft_parcheck(t_aio *aio);
 int		ft_mapcheck(t_aio *aio);
 void	ft_print_parse(t_aio *aio);
 int		ft_map(t_aio *aio, char *line, int *i);
-int		ft_xpm(t_aio *s, unsigned int **adr, char *file);
+int		ft_xpm(t_aio *aio, unsigned int **adr, char *file);
 int		ft_make_map_list(t_aio *aio, char *line, int *i);
 //KEY
 int		ft_press(int key, void *arg);
-int		ft_set(t_aio *s, int key, int set);
+int		ft_set(t_aio *aio, int key, int set);
 int		ft_release(int key, void *arg);
 int		ft_key(t_aio *aio);
 unsigned int	ft_shadow(t_aio *aio, unsigned int col);

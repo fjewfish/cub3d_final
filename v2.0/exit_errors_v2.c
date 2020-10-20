@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_errors_v2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fjewfish <fjewfish@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fjewfish <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 17:29:01 by fjewfish          #+#    #+#             */
-/*   Updated: 2020/10/16 02:41:04 by fjewfish         ###   ########.fr       */
+/*   Updated: 2020/10/20 17:46:42 by fjewfish         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,14 @@ int		ft_close(t_aio *aio, int win)
 	//int	i;
 
 	//i = 0;
-	//while (i < s->map.y)
-	//	free(s->map.tab[i++]);
-	//free(s->map.tab);
-	//free(s->tex.n);
-	//free(s->tex.s);
-	//free(s->tex.e);
-	//free(s->tex.w);
-	//free(s->tex.i);
+	//while (i < aio->map.y)
+	//	free(aio->map.tab[i++]);
+	//free(aio->map.tab);
+	//free(aio->tex.n);
+	//free(aio->tex.s);
+	//free(aio->tex.e);
+	//free(aio->tex.w);
+	//free(aio->tex.i);
 	//memory_manager(NULL, M_ADD);
 	if (win == 1)
 		mlx_destroy_window(aio->mlx.ptr, aio->win.ptr);

@@ -1,4 +1,5 @@
 #include "main_header_v2.h"
+#include <stdio.h>
 
 int		ft_spaceskip(char *line, int *i)
 {
@@ -33,5 +34,16 @@ ft_printf("MAP.MAP\n");
 		ft_printf("%s\n", aio->map.map[i]);
 		i++;
 	}
-ft_printf("SPRITE\n Count = %d,", aio->map.sprite_count);
+ft_printf("SPRITE\n Count = %d\n", aio->map.sprite_count);
+i = 0;
+while (i < aio->map.sprite_count)
+{
+	printf("(%f,%f)   ", aio->spr[i].x, aio->spr[i].y);
+	i++;
+}
+ft_printf("\n");
+ft_printf("IMG\n");
+ft_printf("dst = (char *)(aio->img.adr + (y_con * aio->img.line_length + x_con * (aio->img.bits_per_pixel / 8)) / 4);\n*(unsigned int*)dst = mlx_get_color_value(aio->mlx.ptr, color);\n");
+ft_printf("adr = %d\nbits_per_pixel = %d\nline_length = %d\nendian = %d\n", (int)aio->img.adr, (int)aio->img.bits_per_pixel, (int)aio->img.line_length, (int)aio->img.endian);
+ft_printf("COEF = %d\n", aio->img.coef_dylib);
 }

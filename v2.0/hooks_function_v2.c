@@ -1,26 +1,26 @@
 #include "main_header_v2.h"
 
-void	ft_reset(t_aio *s)
+void	ft_reset(t_aio *aio)
 {
-	//s->map.tab = NULL;
-	//s->tex.n = NULL;
-	//s->tex.s = NULL;
-	//s->tex.e = NULL;
-	//s->tex.w = NULL;
-	//s->tex.d = NULL;
-	//s->tex.x = NULL;
-	//s->tex.f = NULL;
-	//s->tex.c = NULL;
-	//s->tex.i = NULL;
-	//s->tex.j = NULL;
-	//s->res.map_x = 0;
-	//s->res.map_y = 0;
-	//s->map.x = 0;
-	//s->map.y = 0;
-	//s->map.spr = 0;
-	//s->err.m = 0;
-	//s->err.n = 0;
-	//s->err.p = 0;
+	//aio->map.tab = NULL;
+	//aio->tex.n = NULL;
+	//aio->tex.s = NULL;
+	//aio->tex.e = NULL;
+	//aio->tex.w = NULL;
+	//aio->tex.d = NULL;
+	//aio->tex.x = NULL;
+	//aio->tex.f = NULL;
+	//aio->tex.c = NULL;
+	//aio->tex.i = NULL;
+	//aio->tex.j = NULL;
+	//aio->res.map_x = 0;
+	//aio->res.map_y = 0;
+	//aio->map.x = 0;
+	//aio->map.y = 0;
+	//aio->map.spr = 0;
+	//aio->err.m = 0;
+	//aio->err.n = 0;
+	//aio->err.p = 0;
 }
 
 void	ft_free(t_aio *aio)
@@ -28,20 +28,20 @@ void	ft_free(t_aio *aio)
 	//int	i;
 
 	//i = 0;
-	//while (i < s->map.y)
-	//	free(s->map.tab[i++]);
-	//free(s->map.tab);
-	//free(s->spr);
-	//free(s->tex.n);
-	//free(s->tex.s);
-	//free(s->tex.e);
-	//free(s->tex.w);
-	//free(s->tex.d);
-	//free(s->tex.x);
-	//free(s->tex.f);
-	//free(s->tex.c);
-	//free(s->tex.i);
-	//free(s->tex.j);
+	//while (i < aio->map.y)
+	//	free(aio->map.tab[i++]);
+	//free(aio->map.tab);
+	//free(aio->spr);
+	//free(aio->tex.n);
+	//free(aio->tex.s);
+	//free(aio->tex.e);
+	//free(aio->tex.w);
+	//free(aio->tex.d);
+	//free(aio->tex.x);
+	//free(aio->tex.f);
+	//free(aio->tex.c);
+	//free(aio->tex.i);
+	//free(aio->tex.j);
 }
 
 int		ft_set(t_aio *aio, int key, int set)
@@ -67,7 +67,7 @@ int		ft_set(t_aio *aio, int key, int set)
 	//else if (key == SHIFT && set)
 	//	ft_open(s);
 	//else if (key == SPACE)
-	//	s->key.x = set;
+	//	aio->key.x = set;
 	return (1);
 }
 
@@ -106,13 +106,13 @@ void	ft_move(t_aio *aio, double coeff)
 	//if (ft_is(PICK, c))
 	//{
 	//	if (c == '7')
-	//		s->hud.h += 35;
+	//		aio->hud.h += 35;
 	//	else if (c == '8')
-	//		s->hud.s += 1000;
+	//		aio->hud.s += 1000;
 	//	else if (c == '-')
-	//		s->hud.a += 3;
-	//	s->map.tab[(int)floor(s->plr.pos_y)][(int)floor(s->plr.pos_x)] = '0';
-	//	s->map.spr--;
+	//		aio->hud.a += 3;
+	//	aio->map.tab[(int)floor(aio->plr.pos_y)][(int)floor(aio->plr.pos_x)] = '0';
+	//	aio->map.spr--;
 	//	ft_slist(s);
 	//}
 }
@@ -140,13 +140,13 @@ void	ft_strafe(t_aio *aio, double coeff)
 	//if (ft_is(PICK, c))
 	//{
 	//	if (c == '7')
-	//		s->hud.h += 35;
+	//		aio->hud.h += 35;
 	//	else if (c == '8')
-	//		s->hud.s += 1000;
+	//		aio->hud.s += 1000;
 	//	else if (c == '-')
-	//		s->hud.a += 3;
-	//	s->map.tab[(int)floor(aio->plr.pos_y)][(int)floor(aio->plr.pos_x)] = '0';
-	//	s->map.spr--;
+	//		aio->hud.a += 3;
+	//	aio->map.tab[(int)floor(aio->plr.pos_y)][(int)floor(aio->plr.pos_x)] = '0';
+	//	aio->map.spr--;
 	//	ft_slist(s);
 	//}
 }
@@ -186,7 +186,7 @@ int		ft_key(t_aio *aio)
 	//if (aio->key.x)
 	//{
 	//	if (aio->hud.f == 0)
-	//		s->hud.f++;
+	//		aio->hud.f++;
 	//}
 
 

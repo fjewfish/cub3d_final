@@ -81,27 +81,27 @@
 // 	}
 // }
 
-// //int		ft_slist(t_aio *s)
+// //int		ft_slist(t_aio *aio)
 // //{
 // //	int		i;
 // //	int		j;
 // //	int		k;
 
-// //	if (s->spr != NULL)
-// //		free(s->spr);
-// //	if (!(s->spr = malloc(sizeof(t_spr) * s->map.spr)))
+// //	if (aio->spr != NULL)
+// //		free(aio->spr);
+// //	if (!(aio->spr = malloc(sizeof(t_spr) * aio->map.spr)))
 // //		return (-1);
 // //	i = 0;
 // //	j = 0;
-// //	while (j < s->map.y)
+// //	while (j < aio->map.y)
 // //	{
 // //		k = 0;
-// //		while (k < s->map.x)
+// //		while (k < aio->map.x)
 // //		{
-// //			if (s->map.tab[j][k] == '2')
+// //			if (aio->map.tab[j][k] == '2')
 // //			{
-// //				s->spr[i].y = (double)j + 0.5;
-// //				s->spr[i++].x = (double)k + 0.5;
+// //				aio->spr[i].y = (double)j + 0.5;
+// //				aio->spr[i++].x = (double)k + 0.5;
 // //			}
 // //			k++;
 // //		}
@@ -389,7 +389,7 @@
 
 // //////////////////////////////////////////////////
 
-// int		ft_xpm(t_aio *s, unsigned int **adr, char *file)
+// int		ft_xpm(t_aio *aio, unsigned int **adr, char *file)
 // {
 // 	int i;
 // 	int		fd;
@@ -404,7 +404,7 @@
 // 	if ((fd = open(file, O_RDONLY)) == -1)
 // 		return (-1);
 // 	close(fd);
-// 	img = mlx_xpm_file_to_image(s->mlx.ptr, file, &tab[0], &tab[1]);
+// 	img = mlx_xpm_file_to_image(aio->mlx.ptr, file, &tab[0], &tab[1]);
 // 	if (img == NULL || tab[0] != 64 || tab[1] != 64)
 // 		return (-1);
 // 	*adr = (unsigned int *)mlx_get_data_addr(img, &tab[2], &tab[3], &tab[4]);
@@ -412,7 +412,7 @@
 // 	return (0);
 // }
 
-// //int		ft_texture(t_aio *s, unsigned int **adr, char *line, int *i)
+// //int		ft_texture(t_aio *aio, unsigned int **adr, char *line, int *i)
 // //{
 // //	char	*file;
 // //	int		j;
@@ -436,7 +436,7 @@
 // //	return (j == -1 ? -9 : 0);
 // //}
 
-// int		ft_slablen(t_aio *s, char *line)
+// int		ft_slablen(t_aio *aio, char *line)
 // {
 // 	int	i;
 // 	int	count;
@@ -453,12 +453,12 @@
 // 			count++;
 // 		i++;
 // 	}
-// 	if (s->map.width != 0 && s->map.width != count)
+// 	if (aio->map.width != 0 && aio->map.width != count)
 // 		return (-1);
 // 	return (count);
 // }
 
-// char	*ft_slab(t_aio *s, char *line, int *i)
+// char	*ft_slab(t_aio *aio, char *line, int *i)
 // {
 // 	char	*slab;
 // 	int		j;
@@ -474,7 +474,7 @@
 // 		else if (line[*i] == '2')
 // 		{
 // 			slab[j++] = line[*i];
-// 			s->map.sprite_count++;
+// 			aio->map.sprite_count++;
 // 		}
 // 		else if (line[*i] != ' ')
 // 		{

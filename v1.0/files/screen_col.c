@@ -6,7 +6,7 @@
 /*   By: fjewfish <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/09 19:37:22 by cclaude           #+#    #+#             */
-/*   Updated: 2020/10/09 17:59:27 by fjewfish         ###   ########.fr       */
+/*   Updated: 2020/10/20 00:46:04 by fjewfish         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,59 @@ unsigned int	ft_pixel(t_all *s, double i)
 	return (BLACK);
 }
 
+//void			ft_column(t_all *s, int size)
+//{
+//	unsigned int	color;
+//	int				start;
+//	int				count;
+
+//	start = s->win.x * (s->win.y - size) / 2;
+//	if (size > s->win.y)
+//		count = (size - s->win.y) / 2;
+//	else
+//		count = 0;
+//	color = s->tex.c;
+//	while (s->ray.i < s->win.x * s->win.y)
+//	{
+//		if (s->ray.i >= start && count < size)
+//		{
+//			color = ft_pixel(s, (double)count / size);
+//			count++;
+//		}
+//		else if (count == size)
+//			color = s->tex.f;
+//		s->img.adr[s->ray.i] = mlx_get_color_value(s->mlx.ptr, color);
+//		s->ray.i += s->win.x;
+//	}
+//	//int d = s->win.x * s->win.y - 1;
+//	//int i = 0;
+//	//while (i < 100)
+//	//{
+//	//s->img.adr[d] = RED;
+//	//d--;
+//	//i++;
+//	//}
+//	s->ray.i -= s->win.x * s->win.y;
+//}
+
+int				ft_size(t_all *s)
+{
+	double	correc;
+	double	fisheye;
+
+	fisheye = fabs((double)s->ray.i / (s->win.x / 2) - 1);
+	fisheye *= 28 * M_PI / 180;
+	correc = (double)s->hit.d * cos(fisheye);
+	return (round(s->win.y / correc));
+}
+
+void			ft_stock(t_all *s)
+{
+	s->stk[s->ray.i].x = s->ray.x;
+	s->stk[s->ray.i].y = s->ray.y;
+	s->stk[s->ray.i].d = s->hit.d;
+}
+
 void			ft_column(t_all *s, int size)
 {
 	unsigned int	color;
@@ -59,31 +112,5 @@ void			ft_column(t_all *s, int size)
 		s->img.adr[s->ray.i] = mlx_get_color_value(s->mlx.ptr, color);
 		s->ray.i += s->win.x;
 	}
-	//int d = s->win.x * s->win.y - 1;
-	//int i = 0;
-	//while (i < 100)
-	//{
-	//s->img.adr[d] = RED;
-	//d--;
-	//i++;
-	//}
 	s->ray.i -= s->win.x * s->win.y;
-}
-
-int				ft_size(t_all *s)
-{
-	double	correc;
-	double	fisheye;
-
-	fisheye = fabs((double)s->ray.i / (s->win.x / 2) - 1);
-	fisheye *= 28 * M_PI / 180;
-	correc = (double)s->hit.d * cos(fisheye);
-	return (round(s->win.y / correc));
-}
-
-void			ft_stock(t_all *s)
-{
-	s->stk[s->ray.i].x = s->ray.x;
-	s->stk[s->ray.i].y = s->ray.y;
-	s->stk[s->ray.i].d = s->hit.d;
 }

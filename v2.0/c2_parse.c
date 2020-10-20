@@ -6,7 +6,7 @@
 /*   By: fjewfish <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/13 12:58:26 by fjewfish          #+#    #+#             */
-/*   Updated: 2020/10/18 07:46:57 by fjewfish         ###   ########.fr       */
+/*   Updated: 2020/10/20 17:46:42 by fjewfish         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,21 @@
 // //	int		j;
 // //	int		k;
 
-// //	if (s->spr != NULL)
-// //		free(s->spr);
-// //	if (!(s->spr = malloc(sizeof(t_spr) * s->map.spr)))
+// //	if (aio->spr != NULL)
+// //		free(aio->spr);
+// //	if (!(aio->spr = malloc(sizeof(t_spr) * aio->map.spr)))
 // //		return (-1);
 // //	i = 0;
 // //	j = 0;
-// //	while (j < s->map.y)
+// //	while (j < aio->map.y)
 // //	{
 // //		k = 0;
-// //		while (k < s->map.x)
+// //		while (k < aio->map.x)
 // //		{
-// //			if (s->map.tab[j][k] == '2')
+// //			if (aio->map.tab[j][k] == '2')
 // //			{
-// //				s->spr[i].y = (double)j + 0.5;
-// //				s->spr[i++].x = (double)k + 0.5;
+// //				aio->spr[i].y = (double)j + 0.5;
+// //				aio->spr[i++].x = (double)k + 0.5;
 // //			}
 // //			k++;
 // //		}

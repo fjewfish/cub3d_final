@@ -6,7 +6,7 @@
 /*   By: fjewfish <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 17:34:02 by fjewfish          #+#    #+#             */
-/*   Updated: 2020/10/18 06:28:17 by fjewfish         ###   ########.fr       */
+/*   Updated: 2020/10/20 17:51:24 by fjewfish         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,4 +86,5 @@ void		ft_initialization_3(t_aio *aio)
 	aio->key.s = 0;
 	aio->key.w = 0;
 	aio->key.x = 0;
+	aio->img.coef_dylib = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: fjewfish <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/13 12:58:17 by fjewfish          #+#    #+#             */
-/*   Updated: 2020/10/19 14:13:13 by fjewfish         ###   ########.fr       */
+/*   Updated: 2020/10/21 00:12:46 by fjewfish         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -385,6 +385,14 @@ int		ft_parse_errors(t_aio *aio)
 	aio->map.height += 2;
 	aio->map.width += 2;
 	ft_slist(aio);
+//	ft_printf("SPRITE\n Count = %d\n", aio->map.sprite_count);
+//i = 0;
+//while (i < aio->map.sprite_count)
+//{
+//	printf("(%f,%f)   ", aio->spr[i].x, aio->spr[i].y);
+//	i++;
+//}
+//ft_printf("\n");
 	//ft_print_parse(aio);
 	return (1);
 }
