@@ -6,14 +6,14 @@
 /*   By: fjewfish <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/13 12:58:26 by fjewfish          #+#    #+#             */
-/*   Updated: 2020/10/20 17:46:42 by fjewfish         ###   ########.fr       */
+/*   Updated: 2020/10/21 15:37:07 by fjewfish         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main_header_v2.h"
 
 
-// //int		ft_slist(t_all *s)
+// //int		ft_slist(t_aio *aio)
 // //{
 // //	int		i;
 // //	int		j;
@@ -42,7 +42,7 @@
 // //	return (1);
 // //}
 
-// //int		ft_xpm(t_all *aio, unsigned int **adr, char *file)
+// //int		ft_xpm(t_aio *aio, unsigned int **adr, char *file)
 // //{
 // //	int		fd;
 // //	void	*img;
@@ -63,7 +63,7 @@
 
 
 
-// //int		ft_texture(t_all *aio, unsigned int **adr, char *line, int *i, char **texture)
+// //int		ft_texture(t_aio *aio, unsigned int **adr, char *line, int *i, char **texture)
 // //{
 // //	int		j;
 
@@ -92,7 +92,7 @@
 // //}
 
 
-// //int		ft_slablen(t_all *aio, char *line)
+// //int		ft_slablen(t_aio *aio, char *line)
 // //{
 // //	int	i;
 // //	int	count;
@@ -114,7 +114,7 @@
 // //	return (count);
 // //}
 
-// //char	*ft_slab(t_all *aio, char *line, int *i)
+// //char	*ft_slab(t_aio *aio, char *line, int *i)
 // //{
 // //	char	*slab;
 // //	int		j;
@@ -143,7 +143,7 @@
 // //	return (slab);
 // //}
 
-// //int		ft_map(t_all *aio, char *line, int *i)
+// //int		ft_map(t_aio *aio, char *line, int *i)
 // //{
 // //	char	**tmp;
 // //	int		j;

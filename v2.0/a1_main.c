@@ -6,7 +6,7 @@
 /*   By: fjewfish <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 14:25:31 by fjewfish          #+#    #+#             */
-/*   Updated: 2020/10/19 19:33:40 by fjewfish         ###   ########.fr       */
+/*   Updated: 2020/10/21 15:46:31 by fjewfish         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ ft_print_parse(aio);
 	mlx_hook(aio->win.ptr, 17, 0, ft_close, aio);
 	mlx_loop_hook(aio->mlx.ptr, ft_key, aio);
 	mlx_do_sync(aio->mlx.ptr);
-ft_print_parse(aio);
+//ft_print_parse(aio);
 	mlx_loop(aio->mlx.ptr);
 	return (1);
 }

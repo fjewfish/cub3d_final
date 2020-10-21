@@ -6,11 +6,13 @@
 /*   By: fjewfish <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/19 00:59:02 by fjewfish          #+#    #+#             */
-/*   Updated: 2020/10/21 09:09:19 by fjewfish         ###   ########.fr       */
+/*   Updated: 2020/10/21 16:53:17 by fjewfish         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main_header_v2.h"
+
+#include <stdio.h>
 int				ft_slist(t_aio *aio);
 void			ft_sprite(t_aio *aio);
 void			ft_sorder(t_aio *aio);
@@ -112,6 +114,7 @@ void			ft_slocate(t_aio *aio, double dirx, double diry, double dist)
 		angle -= 360;
 	else if (angle <= -180)
 		angle += 360;
+printf("\nX-%f,  Y-%f, D-%f\n", aio->spr->x, aio->spr->y, aio->spr->d);
 	ft_sdraw(aio, angle * aio->res.map_x / 66, dist);
 }
 
@@ -136,15 +139,14 @@ void			ft_sdraw(t_aio *aio, int loc, double dist)
 			col = aio->tex.sp[col];
 			index = loc + y + (aio->res.map_y / 2 + x) * aio->res.map_x + x*aio->img.coef_dylib;
 			if (index < (aio->res.map_x * aio->res.map_y + x*aio->img.coef_dylib))
-				aio->img.adr[index] = ft_spixel(aio, index, col, x);
+				aio->img.adr[index] = GREEN;
+				//aio->img.adr[index] = ft_spixel(aio, index, col, x);
 			x++;
 		}
 		y++;
 		x = 0;
 	}
 }
-
-
 
 unsigned int	ft_spixel(t_aio *aio, int index, unsigned int col, int x)
 {

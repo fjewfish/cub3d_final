@@ -27,7 +27,7 @@
 # define RIGHT 124
 
 # define SPEED 7
-# define TURN 0.05
+# define TURN 0.025
 
 # define ANG 0.57595865315
 
