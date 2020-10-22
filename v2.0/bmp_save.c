@@ -25,7 +25,7 @@ q++;
 			i++;
 			j++;
 		}
-ft_printf("%d\n", k);
+//ft_printf("%d\n", k);
 		k--;
 		i -= 2 * aio->res.map_x;
 	}

@@ -6,7 +6,7 @@
 /*   By: fjewfish <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/19 00:59:02 by fjewfish          #+#    #+#             */
-/*   Updated: 2020/10/21 16:53:17 by fjewfish         ###   ########.fr       */
+/*   Updated: 2020/10/22 17:55:14 by fjewfish         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ void			ft_sprite(t_aio *aio);
 void			ft_sorder(t_aio *aio);
 void			ft_slocate(t_aio *aio, double dirx, double diry, double dist);
 void			ft_sdraw(t_aio *aio, int loc, double dist);
-unsigned int	ft_spixel(t_aio *aio, int index, unsigned int col, int x);
+//unsigned int	ft_spixel(t_aio *aio, int index, unsigned int col, int x);
+unsigned int	ft_spixel(t_aio *aio, int index, unsigned int col);
 
 int		ft_slist(t_aio *aio)
 {
@@ -67,6 +68,15 @@ void			ft_sprite(t_aio *aio)
 	}
 	ft_sorder(aio);
 	i = 0;
+//{
+//	int d = 0;
+//	while (d < aio->map.sprite_count)
+//	{
+//	printf("X%f, Y%f, D%f - ", aio->spr[d].x, aio->spr[d].y, aio->spr[d].d);
+//	d++;
+//	}
+//	printf("\n");
+//}
 	while (i < aio->map.sprite_count)
 	{
 		ft_slocate(aio, aio->spr[i].x, aio->spr[i].y, aio->spr[i].d);
@@ -103,8 +113,10 @@ void			ft_slocate(t_aio *aio, double dirx, double diry, double dist)
 {
 	double	angle;
 
+printf("X%f, Y%f, D%f   ", dirx, diry, dist);
 	dirx = (dirx - aio->plr.pos_x) / dist;
 	diry = (diry - aio->plr.pos_y) / dist;
+printf("DIR_X%f, DIR_Y%f   ", dirx, diry);
 	if (diry <= 0)
 		angle = acos(dirx) * 180 / M_PI;
 	else
@@ -114,8 +126,9 @@ void			ft_slocate(t_aio *aio, double dirx, double diry, double dist)
 		angle -= 360;
 	else if (angle <= -180)
 		angle += 360;
-printf("\nX-%f,  Y-%f, D-%f\n", aio->spr->x, aio->spr->y, aio->spr->d);
-	ft_sdraw(aio, angle * aio->res.map_x / 66, dist);
+//printf("ANGLE%f   LOC%f   ", angle, angle * aio->res.map_x  / 66);
+	ft_sdraw(aio, angle * aio->res.map_x  / 66, dist);
+printf("\n");
 }
 
 void			ft_sdraw(t_aio *aio, int loc, double dist)
@@ -123,32 +136,32 @@ void			ft_sdraw(t_aio *aio, int loc, double dist)
 	unsigned int	col;
 	double			size;
 	int				index;
-	int				y;
 	int				x;
+	int				y;
 
-	y = 0;
 	x = 0;
-	size = aio->res.map_y / dist / 2;
+	y = 0;
+	size = aio->res.map_y / dist;
 	loc = loc - size / 2;
-	while (y < size)
+printf("\nLOC%d   SIZE%f",loc, size);
+	while (x < size)
 	{
-		while ((loc + y >= 0 && loc + y < aio->res.map_x) &&
-				(x < size && aio->stk[loc + y].d > dist))
+		while ((loc + x >= 0 && loc + x < aio->res.map_x) &&
+				(y < size && aio->stk[loc + x].d > dist))
 		{
-			col = 64 * floor(64 * (double)x / size) + (double)y / size * 64;
+			col = 64 * floor(64 * (double)y / size) + (double)x / size * 64;
 			col = aio->tex.sp[col];
-			index = loc + y + (aio->res.map_y / 2 + x) * aio->res.map_x + x*aio->img.coef_dylib;
-			if (index < (aio->res.map_x * aio->res.map_y + x*aio->img.coef_dylib))
-				aio->img.adr[index] = GREEN;
-				//aio->img.adr[index] = ft_spixel(aio, index, col, x);
-			x++;
+			index = loc + x + (aio->res.map_y / 2 + y - (int)size / 2) * (aio->res.map_x + aio->img.coef_dylib);
+			if (index < (aio->res.map_x + aio->img.coef_dylib)* aio->res.map_y)
+				aio->img.adr[index] = ft_spixel(aio, index, col);
+			y++;
 		}
-		y++;
-		x = 0;
+		x++;
+		y = 0;
 	}
 }
 
-unsigned int	ft_spixel(t_aio *aio, int index, unsigned int col, int x)
+unsigned int	ft_spixel(t_aio *aio, int index, unsigned int col)
 {
 	int	t;
 	int	r;
